@@ -1,0 +1,82 @@
+---
+// Header — reuses the SA pattern (DESIGN.md, "approved, do not redesign"):
+// blue banner, 3 columns (company left · logo plate centre · contact + Regional
+// Sites right), then a nav row with centred links + a compact search field.
+// Wholesale business → no "Buy now". US site → US is current, dropdown lists other regions.
+import { NAV, REGIONS, SITE } from '../consts';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+<header class="dots-blue text-white">
+  <!-- Top banner: 3 columns -->
+  <div class="section-inner grid grid-cols-2 items-center gap-4 py-4 md:grid-cols-3">
+    <!-- Left: company name -->
+    <div class="order-1 text-sm font-semibold leading-tight">
+      <span class="block text-base font-extrabold tracking-tight">{SITE.brand}</span>
+      <span class="text-white/80">{SITE.company}</span>
+    </div>
+
+    <!-- Centre: logo on white rounded plate (DESIGN.md header pattern) -->
+    <div class="order-3 col-span-2 flex justify-center md:order-2 md:col-span-1">
+      <a href="/" aria-label={`${SITE.brand} home`}
+         class="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2 shadow-sm">
+        <img src="/logo.webp" alt="F10® Products" width="253" height="160"
+             class="h-12 w-auto sm:h-14" />
+      </a>
+    </div>
+
+    <!-- Right: contact + Regional Sites dropdown -->
+    <div class="order-2 flex items-center justify-end gap-4 md:order-3">
+      <!-- [CONFIRM: US contact details] -->
+      <div class="hidden text-right text-xs leading-tight text-white/85 sm:block">
+        <a href={`tel:${SITE.phone.replace(/[^0-9]/g, '')}`} class="block font-semibold hover:underline">{SITE.phone}</a>
+        <a href={`mailto:${SITE.email}`} class="hover:underline">{SITE.email}</a>
+      </div>
+      <details class="group relative">
+        <summary class="flex cursor-pointer list-none items-center gap-1 rounded-md bg-white/10 px-3 py-1.5 text-xs font-semibold hover:bg-white/20">
+          Regional Sites
+          <span class="transition-transform group-open:rotate-180" aria-hidden="true">▾</span>
+        </summary>
+        <ul class="absolute right-0 z-20 mt-2 w-48 overflow-hidden rounded-lg bg-white text-charcoal shadow-lg ring-1 ring-border-grey">
+          {REGIONS.map((r) => (
+            <li>
+              <a href={r.href} class="block px-4 py-2 text-sm hover:bg-soft-grey">{r.label}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </div>
+  </div>
+
+  <!-- Nav row -->
+  <nav class="border-t border-white/15 bg-f10-blue-deep/40" aria-label="Primary">
+    <div class="section-inner flex flex-wrap items-center justify-center gap-x-1 gap-y-2 py-2">
+      {NAV.map((item) => (
+        <a
+          href={item.href}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+          class:list={[
+            'rounded px-3 py-1.5 text-sm font-semibold text-white transition-colors',
+            'border-b-2 border-transparent hover:border-f10-red',
+            isActive(item.href) && 'border-f10-red',
+          ]}
+        >{item.label}</a>
+      ))}
+      <!-- Compact search field (magnifier). [Wire to /resources search later] -->
+      <form action="/search" method="get" role="search" class="ml-2 flex items-center">
+        <label for="site-search" class="sr-only">Search</label>
+        <input
+          id="site-search" name="q" type="search" placeholder="Search"
+          class="w-28 rounded-l-md border-0 bg-white px-3 py-1.5 text-sm text-charcoal placeholder:text-medium-grey focus:w-40 focus:outline-none focus:ring-2 focus:ring-f10-red"
+        />
+        <button type="submit" aria-label="Search"
+          class="rounded-r-md bg-white px-2 py-1.5 text-f10-blue hover:text-f10-red">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" stroke-linecap="round" />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </nav>
+</header>

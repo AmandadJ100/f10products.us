@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+import { SITE } from '../consts';
+
+// Structure-first. Regulated content = supplied by Amanda verbatim or a visible
+// placeholder (REGULATORY_GUARDRAILS.md). The EUA copy below is the FDA-authorized
+// use statement (from the product Fact Sheets / labels) — no claims are authored.
+
+// The two FDA EUA products (Amanda-supplied assets + EUA numbers from labels).
+const euaProducts = [
+  {
+    name: 'F10® Antiseptic Wound Spray with Insecticide',
+    eua: 'FDA EUA No. 006672', // confirmed by Amanda 2026-07-28
+    image: '/products/eua-wound-spray.webp',
+    factSheet: '/documents/f10-wound-spray-eua-fact-sheet.pdf',
+    foi: '/documents/f10-wound-spray-eua-foi-sheet.pdf',
+  },
+  {
+    name: 'F10® Antiseptic Barrier Ointment with Insecticide',
+    eua: 'FDA EUA No. 006677',
+    image: '/products/eua-barrier-ointment.webp',
+    factSheet: '/documents/f10-barrier-ointment-eua-fact-sheet.pdf',
+    foi: '/documents/f10-barrier-ointment-eua-foi-sheet.pdf',
+  },
+];
+
+// Authorized-use species, verbatim from the FDA Fact Sheet (Amanda-supplied).
+const euaSpecies = [
+  'Cattle',
+  'Horses',
+  'Minor species of hoof stock',
+  'Raptors & other wild birds',
+  'Pet birds',
+  'Captive & captured wild, exotic & zoo mammals',
+];
+
+// Hand Hygiene removed — not exported to the US (Amanda, 2026).
+const productCategories = [
+  { title: 'Disinfectants', href: '/products/disinfectants', image: '/products/cat-disinfectants.webp',
+    imageAlt: 'F10® veterinary disinfectant range', description: 'Surface and environmental disinfection for professional settings.' },
+  { title: 'FDA EUA Products', href: '/products/eua', image: '/products/eua-wound-spray.webp',
+    imageAlt: 'F10® FDA Emergency Use Authorized products', description: 'US Emergency Use Authorized — screwworm myiasis. Documents published in full.' },
+  { title: 'Treatment Products', href: '/products/treatment', image: '/products/cat-treatment.webp',
+    imageAlt: 'F10® antiseptic treatment range', description: 'Topical antiseptic range. [US-registered range to confirm]' },
+];
+
+const audiences = [
+  { title: 'Veterinary', href: '/who-we-serve/veterinary' },
+  { title: 'Livestock & Farming', href: '/who-we-serve/livestock-farming' },
+  { title: 'Pet, Avian & Exotic Owners', href: '/who-we-serve/companion-animals' },
+];
+---
+<BaseLayout
+  title={SITE.name}
+  description="F10® veterinary & biosecurity disinfectants for US professionals — trusted worldwide, backed by evidence and FDA Emergency Use Authorized products."
+>
+  <!-- Hero -->
+  <section class="dots-hero mt-4 text-white">
+    <div class="section-inner grid gap-8 py-20 md:grid-cols-[3fr_2fr] md:items-center">
+      <div>
+        <p class="mb-3 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
+          Clinical · Assured · International
+        </p>
+        <h1 class="text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+          Professional-grade disinfection, trusted worldwide.
+        </h1>
+        <p class="mt-4 max-w-xl text-lg text-white/90">
+          F10® veterinary and biosecurity disinfectants, now presented for the US market — with the
+          evidence, credentials, and FDA Emergency Use Authorized documentation professionals verify
+          before they buy.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="/products" class="rounded-lg bg-f10-red px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:brightness-110">
+            Explore the range
+          </a>
+          <a href="#fda-eua" class="rounded-lg bg-white/10 px-6 py-3 text-sm font-bold text-white ring-1 ring-white/40 transition hover:bg-white/20">
+            FDA EUA products
+          </a>
+        </div>
+      </div>
+      <div class="hidden md:block">
+        <div class="rounded-2xl bg-white/95 p-6 shadow-lg ring-1 ring-white/40">
+          <img src="/products/hero-products.webp" width="1000" height="1058"
+               alt="F10® SC Veterinary Disinfectant range" class="mx-auto h-64 w-auto object-contain" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust strip -->
+  <section class="border-b border-border-grey bg-white">
+    <div class="section-inner flex flex-wrap items-center justify-center gap-x-10 gap-y-3 py-6 text-center text-sm font-semibold text-medium-grey">
+      <span>FDA Emergency Use Authorized products</span>
+      <span class="hidden sm:inline text-border-grey">•</span>
+      <span>[CONFIRM: US registrations — EPA / FDA]</span>
+      <span class="hidden sm:inline text-border-grey">•</span>
+      <span>[CONFIRM: certifications to foreground — GMP / ISO]</span>
+    </div>
+  </section>
+
+  <!-- FDA EUA — featured (John's emphasis) -->
+  <section id="fda-eua" class="dots-light scroll-mt-8">
+    <div class="section-inner py-16">
+      <div class="max-w-3xl">
+        <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
+          FDA Emergency Use Authorization
+        </span>
+        <h2 class="mt-3 text-3xl font-extrabold">Authorized for use against New World screwworm</h2>
+        <p class="mt-3 text-charcoal">
+          Two F10® products are authorized by the U.S. FDA under Emergency Use Authorization for the
+          prevention and treatment of infestations caused by New World screwworm
+          (<em>Cochliomyia hominivorax</em>) larvae — myiasis — in the following animals:
+        </p>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {euaSpecies.map((s) => (
+            <li class="rounded-full border border-border-grey bg-white px-3 py-1 text-sm font-semibold text-charcoal">{s}</li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- The two authorized products -->
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {euaProducts.map((p) => (
+          <div class="flex items-center gap-5 rounded-[var(--radius-card)] border border-border-grey bg-white p-5">
+            <div class="flex h-40 w-28 shrink-0 items-center justify-center rounded-lg bg-soft-grey p-2">
+              <img src={p.image} alt={p.name} loading="eager" class="h-full w-auto object-contain" />
+            </div>
+            <div>
+              <h3 class="text-lg font-extrabold leading-tight text-charcoal">{p.name}</h3>
+              <p class="mt-1 text-sm font-semibold text-f10-blue">{p.eua}</p>
+              <div class="mt-3 flex flex-col gap-1">
+                <a href={p.factSheet} target="_blank" rel="noopener" class="text-sm font-semibold text-f10-red hover:underline">Read the FDA Fact Sheet →</a>
+                <a href={p.foi} target="_blank" rel="noopener" class="text-sm font-semibold text-f10-blue hover:underline">FOI Summary →</a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Authorized-use caution (from the FDA Fact Sheet / label) + full-document pointer -->
+      <div class="mt-8 rounded-lg border-l-4 border-f10-amber bg-white p-5 text-sm text-medium-grey">
+        <p><span class="font-bold text-charcoal">Important:</span> It is a violation of Federal law to use these
+        products other than as directed in the FDA Fact Sheet. The EUA documents are published in full and
+        unaltered — read each Fact Sheet for authorized use, conditions, and limitations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product categories -->
+  <section class="bg-white">
+    <div class="section-inner py-16">
+      <h2 class="text-3xl font-extrabold">Product range</h2>
+      <p class="mt-2 max-w-2xl text-medium-grey">
+        The US-registered range. <span class="font-semibold">[CONFIRM: which products are cleared for US sale, and under which body.]</span>
+      </p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {productCategories.map((c) => <Card {...c} fit="contain" eager />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we serve -->
+  <section class="dots-light">
+    <div class="section-inner py-16">
+      <h2 class="text-3xl font-extrabold">Who we serve</h2>
+      <p class="mt-2 max-w-2xl text-medium-grey">Guidance built around how US professionals actually work.</p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {audiences.map((a) => <Card title={a.title} href={a.href} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Credentials / evidence -->
+  <section class="bg-white">
+    <div class="section-inner grid gap-8 py-16 md:grid-cols-2 md:items-center">
+      <div>
+        <h2 class="text-3xl font-extrabold">Evidence you can verify</h2>
+        <p class="mt-3 text-medium-grey">
+          Trust is the point. Credentials, evidence, and the FDA Emergency Use Authorized documents are
+          published in full and unaltered — so professional buyers can confirm F10® for themselves.
+        </p>
+        <a href="/credentials" class="mt-5 inline-block rounded-lg bg-f10-blue px-6 py-3 text-sm font-bold text-white transition hover:bg-f10-blue-deep">
+          See credentials & documents
+        </a>
+      </div>
+      <div class="rounded-xl border border-border-grey bg-soft-grey p-6 text-sm text-medium-grey">
+        [CONTENT SLOT: credential logos + EUA document cards (Fact Sheet + FOI), per REGULATORY_GUARDRAILS.md.]
+      </div>
+    </div>
+  </section>
+
+  <!-- Distributor CTA -->
+  <section class="dots-blue text-white">
+    <div class="section-inner flex flex-col items-center gap-4 py-14 text-center">
+      <h2 class="text-3xl font-extrabold text-white">Looking to buy F10® in the US?</h2>
+      <p class="max-w-xl text-white/90">[CONFIRM: US where-to-buy model — distributors as in SA, or a different US arrangement.]</p>
+      <a href="/distributors" class="rounded-lg bg-white px-6 py-3 text-sm font-bold text-f10-blue transition hover:bg-light-blue">
+        Find a distributor
+      </a>
+    </div>
+  </section>
+</BaseLayout>

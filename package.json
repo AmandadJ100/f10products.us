@@ -1,0 +1,19 @@
+{
+  "name": "f10products-us",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3",
+    "@fontsource-variable/archivo": "^5",
+    "@tailwindcss/vite": "^4",
+    "astro": "^5",
+    "tailwindcss": "^4"
+  }
+}

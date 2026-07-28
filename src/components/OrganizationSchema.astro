@@ -1,0 +1,18 @@
+---
+// Sitewide Organization JSON-LD (SEO_GEO_STRATEGY.md — the biggest GEO lever).
+// FACTS ONLY. No certifications/claims until Amanda confirms them.
+import { SITE } from '../consts';
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: `${SITE.brand} — ${SITE.company}`,
+  url: SITE.url,
+  logo: `${SITE.url}/logo.png`, // raster logo (Google prefers PNG); source SVG also in /public
+  telephone: SITE.phone,
+  email: SITE.email,
+  // sameAs: regional + social profiles — [CONFIRM exact URLs before enabling]
+  // sameAs: ['https://www.f10.co.uk/', 'https://www.f10products.com/'],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(org)} is:inline />

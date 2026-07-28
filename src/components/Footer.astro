@@ -1,0 +1,42 @@
+---
+import { NAV, REGIONS, SITE } from '../consts';
+const year = 2026; // static build; update at release
+---
+<footer class="dots-blue mt-16 text-white">
+  <div class="section-inner grid gap-8 py-12 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <p class="text-lg font-extrabold tracking-tight">{SITE.brand}</p>
+      <p class="mt-1 max-w-sm text-sm text-white/80">{SITE.tagline}</p>
+      <p class="mt-3 text-xs text-white/70">{SITE.company}</p>
+      <p class="mt-1 text-xs text-white/70">
+        <a href={`tel:${SITE.phone.replace(/[^0-9]/g, '')}`} class="hover:underline">{SITE.phone}</a>
+        · <a href={`mailto:${SITE.email}`} class="hover:underline">{SITE.email}</a>
+      </p>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-bold uppercase tracking-wider text-white/70">Explore</h2>
+      <ul class="mt-3 space-y-2 text-sm">
+        {NAV.map((item) => (
+          <li><a href={item.href} class="text-white/85 hover:text-white hover:underline">{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-bold uppercase tracking-wider text-white/70">Regional Sites</h2>
+      <ul class="mt-3 space-y-2 text-sm">
+        {REGIONS.map((r) => (
+          <li><a href={r.href} class="text-white/85 hover:text-white hover:underline">{r.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/15">
+    <div class="section-inner flex flex-col items-center justify-between gap-2 py-4 text-xs text-white/70 sm:flex-row">
+      <p>© {year} {SITE.company}. All rights reserved.</p>
+      <p>Report an adverse reaction: <a href="/report-adverse-reaction" class="underline hover:text-white">here</a></p>
+    </div>
+  </div>
+</footer>

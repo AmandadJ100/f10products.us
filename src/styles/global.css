@@ -1,0 +1,86 @@
+@import "tailwindcss";
+@import "@fontsource-variable/archivo";
+
+/* ------------------------------------------------------------------ *
+ * F10 design tokens — from DESIGN.md. Identity is committed.
+ * F10 Blue carries the brand; Red is emphasis only; Teal is a
+ * hero-gradient accent only (not a UI colour).
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-f10-blue: #0E77BC;   /* dominant */
+  --color-f10-blue-deep: #095B91; /* depth / gradients */
+  --color-f10-red: #EC3437;    /* emphasis, active states, primary CTA only */
+  --color-soft-grey: #F5F7FA;
+  --color-light-blue: #D9EEF9;
+  --color-charcoal: #2D3748;   /* body text */
+  --color-medium-grey: #6B7280;
+  --color-border-grey: #D9DEE5;
+  --color-f10-green: #2E9E52;
+  --color-f10-amber: #F2B134;
+  --color-f10-teal: #14A3C7;   /* hero-gradient end accent ONLY */
+
+  --font-sans: "Archivo Variable", system-ui, -apple-system, sans-serif;
+
+  --radius-card: 14px;
+}
+
+/* ------------------------------------------------------------------ *
+ * Base  (in @layer base so Tailwind utilities can override, e.g.
+ * text-white on a hero <h1>)
+ * ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #ffffff;
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+    color: var(--color-charcoal);
+  }
+
+  /* Respect reduced-motion everywhere (DESIGN.md motion rule) */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Signature graphic language — halftone dots (DESIGN.md)
+ * ------------------------------------------------------------------ */
+@layer components {
+  .dots-blue {
+    background-color: var(--color-f10-blue);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.10) 1.5px, transparent 1.6px);
+    background-size: 16px 16px;
+  }
+  .dots-hero {
+    background-image:
+      radial-gradient(rgba(255, 255, 255, 0.10) 1.5px, transparent 1.6px),
+      linear-gradient(135deg, var(--color-f10-blue-deep) 0%, var(--color-f10-blue) 55%, var(--color-f10-teal) 140%);
+    background-size: 16px 16px, 100% 100%;
+  }
+  .dots-light {
+    background-color: var(--color-soft-grey);
+    background-image: radial-gradient(#E3E9F2 1.5px, transparent 1.6px);
+    background-size: 16px 16px;
+  }
+
+  /* Reusable band helper (mirrors the SA "band class" names) */
+  .section-inner {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+}
