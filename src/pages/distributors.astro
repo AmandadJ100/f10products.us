@@ -7,9 +7,9 @@ import { SITE } from '../consts';
 //   - FDA EUA (screwworm) products → DFA Farm Supplies
 //   - all other products          → Viva Pet Supply LLC
 // Contact facts supplied by Amanda. Nothing invented:
-//   - [CONFIRM] DFA full mailing address (only street supplied).
+//   - DFA address is published exactly as DFA/Meegan requested (street only) — intentional.
 //   - [CONFIRM] whether the named rep's direct cell (937-622-8855) is published publicly
-//     — held off by default (privacy). Company channels shown.
+//     — held off by default (privacy); Amanda re-checking. Company channels shown.
 
 const distributors = [
   {
@@ -93,7 +93,7 @@ const jsonLd = {
               {d.address && (
                 <div class="flex gap-2">
                   <dt class="w-16 shrink-0 font-semibold text-medium-grey">Address</dt>
-                  <dd class="text-charcoal">{d.address} <span class="text-medium-grey">[CONFIRM: city / state / ZIP]</span></dd>
+                  <dd class="text-charcoal">{d.address}</dd>
                 </div>
               )}
               <div class="flex gap-2">
