@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/Card.astro';
 import { SITE } from '../consts';
+import { categories, productsInCategory } from '../data/products';
 
 // Structure-first. Regulated content = supplied by Amanda verbatim or a visible
 // placeholder (REGULATORY_GUARDRAILS.md). The EUA copy below is the FDA-authorized
@@ -36,14 +37,15 @@ const euaSpecies = [
 ];
 
 // Hand Hygiene removed — not exported to the US (Amanda, 2026).
-const productCategories = [
-  { title: 'Disinfectants', href: '/products/disinfectants', image: '/products/cat-disinfectants.webp',
-    imageAlt: 'F10® veterinary disinfectant range', description: 'Surface and environmental disinfection for professional settings.' },
-  { title: 'FDA EUA Products', href: '/products/eua', image: '/products/eua-wound-spray.webp',
-    imageAlt: 'F10® FDA Emergency Use Authorized products', description: 'US Emergency Use Authorized — screwworm myiasis. Documents published in full.' },
-  { title: 'Treatment Products', href: '/products/treatment', image: '/products/cat-treatment.webp',
-    imageAlt: 'F10® antiseptic treatment range', description: 'Topical antiseptic range. [US-registered range to confirm]' },
-];
+// Category cards come from the shared products data (single source of truth),
+// in the confirmed order: FDA EUA · Disinfectants · Treatment.
+const productCategories = categories.map((c) => ({
+  title: c.label,
+  href: c.href,
+  image: c.image,
+  imageAlt: c.imageAlt,
+  description: `${c.blurb} (${productsInCategory(c.key).length} products)`,
+}));
 
 const audiences = [
   { title: 'Veterinary', href: '/who-we-serve/veterinary',
