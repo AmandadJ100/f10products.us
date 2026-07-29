@@ -28,7 +28,6 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
 
     <!-- Right: contact + Regional Sites dropdown -->
     <div class="order-2 flex items-center justify-end gap-4 md:order-3">
-      <!-- [CONFIRM: US contact details] -->
       <div class="hidden text-right text-xs leading-tight text-white/85 sm:block">
         <a href={`tel:${SITE.phone.replace(/[^0-9]/g, '')}`} class="block font-semibold hover:underline">{SITE.phone}</a>
         <a href={`mailto:${SITE.email}`} class="hover:underline">{SITE.email}</a>

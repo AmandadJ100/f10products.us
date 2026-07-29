@@ -46,9 +46,12 @@ const productCategories = [
 ];
 
 const audiences = [
-  { title: 'Veterinary', href: '/who-we-serve/veterinary' },
-  { title: 'Livestock & Farming', href: '/who-we-serve/livestock-farming' },
-  { title: 'Pet, Avian & Exotic Owners', href: '/who-we-serve/companion-animals' },
+  { title: 'Veterinary', href: '/who-we-serve/veterinary',
+    image: '/audiences/veterinary.webp', imageAlt: 'Veterinary surgical team operating in a clinical theatre' },
+  { title: 'Livestock & Farming', href: '/who-we-serve/livestock-farming',
+    image: '/audiences/livestock-farming.webp', imageAlt: 'Rancher with a horse and cattle on a US livestock farm' },
+  { title: 'Pet, Avian & Exotic Owners', href: '/who-we-serve/companion-animals',
+    image: '/audiences/pet-avian-exotic-owners.webp', imageAlt: 'Pet owner at home with a dog, cat and pet bird' },
 ];
 ---
 <BaseLayout
@@ -91,11 +94,11 @@ const audiences = [
   <!-- Trust strip -->
   <section class="border-b border-border-grey bg-white">
     <div class="section-inner flex flex-wrap items-center justify-center gap-x-10 gap-y-3 py-6 text-center text-sm font-semibold text-medium-grey">
-      <span>FDA Emergency Use Authorized products</span>
+      <span>FDA Emergency Use Authorized</span>
       <span class="hidden sm:inline text-border-grey">•</span>
-      <span>[CONFIRM: US registrations — EPA / FDA]</span>
+      <span>GMP compliance</span>
       <span class="hidden sm:inline text-border-grey">•</span>
-      <span>[CONFIRM: certifications to foreground — GMP / ISO]</span>
+      <span>ISO 9001 certified</span>
     </div>
   </section>
 
@@ -166,7 +169,7 @@ const audiences = [
       <h2 class="text-3xl font-extrabold">Who we serve</h2>
       <p class="mt-2 max-w-2xl text-medium-grey">Guidance built around how US professionals actually work.</p>
       <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {audiences.map((a) => <Card title={a.title} href={a.href} />)}
+        {audiences.map((a) => <Card {...a} />)}
       </div>
     </div>
   </section>
@@ -184,8 +187,17 @@ const audiences = [
           See credentials & documents
         </a>
       </div>
-      <div class="rounded-xl border border-border-grey bg-soft-grey p-6 text-sm text-medium-grey">
-        [CONTENT SLOT: credential logos + EUA document cards (Fact Sheet + FOI), per REGULATORY_GUARDRAILS.md.]
+      <div class="rounded-xl border border-border-grey bg-soft-grey p-6">
+        <p class="text-xs font-bold uppercase tracking-wider text-medium-grey">Credentials</p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {['FDA Emergency Use Authorized', 'FDA Index (Minor Species)', 'GMP compliance', 'ISO 9001'].map((c) => (
+            <li class="rounded-full border border-border-grey bg-white px-3 py-1 text-sm font-semibold text-charcoal">{c}</li>
+          ))}
+        </ul>
+        <p class="mt-4 text-sm text-medium-grey">
+          Full certificates and the FDA Fact Sheet / FOI documents are published on the
+          <a href="/credentials" class="font-semibold text-f10-blue hover:underline">Credentials</a> page.
+        </p>
       </div>
     </div>
   </section>
