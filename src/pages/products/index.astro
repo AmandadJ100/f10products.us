@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+import { SITE } from '../../consts';
+import { categories, productsInCategory } from '../../data/products';
+
+// PRODUCTS HUB (SITE_PLAN.md #3). Structure-first, regulatory-safe:
+// factual/organisational copy only — no efficacy, spectrum, or registration
+// claims (REGULATORY_GUARDRAILS.md). Category order: FDA EUA · Disinfectants ·
+// Treatment (confirmed 2026-07-29).
+
+const cards = categories.map((c) => ({
+  title: c.label,
+  href: c.href,
+  image: c.image,
+  imageAlt: c.imageAlt,
+  description: `${c.blurb} (${productsInCategory(c.key).length} products)`,
+}));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Products', item: SITE.url + '/products' },
+  ],
+};
+---
+<BaseLayout
+  title="Products"
+  description="The F10® US product range — FDA Emergency Use Authorized products, veterinary disinfectants, and topical antiseptic treatments. Documents published in full."
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
+
+  <!-- Page hero -->
+  <section class="dots-hero text-white">
+    <div class="section-inner py-16">
+      <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
+        <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span> Products
+      </nav>
+      <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+        The F10® product range
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90">
+        F10® products presented for the US market, organised into three groups. Each product links its
+        published documents — FDA Fact Sheets, FOI Summaries, and Safety Data Sheets — so professional
+        buyers can verify for themselves.
+      </p>
+    </div>
+  </section>
+
+  <!-- Category cards -->
+  <section class="bg-white">
+    <div class="section-inner py-16">
+      <h2 class="text-3xl font-extrabold">Browse by category</h2>
+      <p class="mt-2 max-w-2xl text-medium-grey">
+        Choose a group to see its products and documents.
+      </p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((c) => <Card {...c} fit="contain" eager />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Documents / trust pointer -->
+  <section class="dots-light">
+    <div class="section-inner grid gap-8 py-16 md:grid-cols-2 md:items-center">
+      <div>
+        <h2 class="text-3xl font-extrabold">Documents published in full</h2>
+        <p class="mt-3 text-medium-grey">
+          Every regulatory document referenced across the product range — FDA Emergency Use
+          Authorizations, FDA Index (Minor Species) FOI Summaries, GMP and ISO 9001 certificates — is
+          published in full and unaltered on the Credentials page.
+        </p>
+        <a href="/credentials" class="mt-5 inline-block rounded-lg bg-f10-blue px-6 py-3 text-sm font-bold text-white transition hover:bg-f10-blue-deep">
+          See credentials &amp; documents
+        </a>
+      </div>
+      <div class="rounded-xl border border-border-grey bg-white p-6">
+        <p class="text-xs font-bold uppercase tracking-wider text-medium-grey">In the range</p>
+        <ul class="mt-3 flex flex-col gap-2">
+          {categories.map((c) => (
+            <li class="flex items-center justify-between gap-3 border-b border-border-grey pb-2 last:border-0 last:pb-0">
+              <a href={c.href} class="font-semibold text-charcoal hover:text-f10-blue">{c.label}</a>
+              <span class="text-sm text-medium-grey">{productsInCategory(c.key).length} products</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Distributor CTA -->
+  <section class="dots-blue text-white">
+    <div class="section-inner flex flex-col items-center gap-4 py-14 text-center">
+      <h2 class="text-3xl font-extrabold text-white">Looking to buy F10® in the US?</h2>
+      <p class="max-w-xl text-white/90">F10® is supplied through authorized US distributors — one for the FDA Emergency Use Authorized products, one for the rest of the range.</p>
+      <a href="/distributors" class="rounded-lg bg-white px-6 py-3 text-sm font-bold text-f10-blue transition hover:bg-light-blue">
+        Find a distributor
+      </a>
+    </div>
+  </section>
+</BaseLayout>

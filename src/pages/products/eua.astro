@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { SITE } from '../../consts';
+import { productsInCategory } from '../../data/products';
+
+// FDA EUA PRODUCTS — Pathway B (emergency screwworm authorization).
+// REGULATORY_GUARDRAILS.md: EUA = emergency + time-limited, broad species incl.
+// cattle/horses. Copy below reuses the already-approved Home/Credentials wording.
+// The two products are ALSO FDA-Index treatment products under a DIFFERENT,
+// narrower species list — kept on the Treatment page, never merged here.
+
+const items = productsInCategory('eua');
+
+// Authorized animals, verbatim from the FDA EUA Fact Sheets (broad — Pathway B).
+const euaSpecies = [
+  'Cattle',
+  'Horses',
+  'Minor species of hoof stock',
+  'Raptors & other wild birds',
+  'Pet birds',
+  'Captive & captured wild, exotic & zoo mammals',
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Products', item: SITE.url + '/products' },
+      { '@type': 'ListItem', position: 3, name: 'FDA EUA Products', item: SITE.url + '/products/eua' },
+    ],
+  },
+  ...items.map((p) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: p.name,
+    brand: { '@type': 'Brand', name: 'F10®' },
+    manufacturer: { '@type': 'Organization', name: SITE.company },
+    image: new URL(p.image, SITE.url).href,
+    category: 'FDA Emergency Use Authorized',
+  })),
+];
+---
+<BaseLayout
+  title="FDA EUA Products"
+  description="F10® products authorized under FDA Emergency Use Authorization for New World screwworm — Fact Sheets and FOI Summaries published in full and unaltered."
+>
+  <Fragment slot="head">
+    {jsonLd.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} is:inline />)}
+  </Fragment>
+
+  <!-- Page hero -->
+  <section class="dots-hero text-white">
+    <div class="section-inner py-16">
+      <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
+        <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span>
+        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> FDA EUA Products
+      </nav>
+      <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+        FDA Emergency Use Authorized products
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90">
+        Two F10® products are authorized by the U.S. FDA under Emergency Use Authorization for the
+        prevention and treatment of New World screwworm (<em>Cochliomyia hominivorax</em>) myiasis.
+      </p>
+    </div>
+  </section>
+
+  <!-- Authorized animals (Pathway B — broad) -->
+  <section class="bg-white">
+    <div class="section-inner py-16">
+      <div class="max-w-3xl">
+        <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
+          FDA Emergency Use Authorization
+        </span>
+        <h2 class="mt-3 text-3xl font-extrabold">Authorized for use against New World screwworm</h2>
+        <p class="mt-3 text-charcoal">
+          Per the FDA Fact Sheets, these products are authorized for the prevention and treatment of
+          infestations caused by New World screwworm larvae — myiasis — in the following animals:
+        </p>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {euaSpecies.map((s) => (
+            <li class="rounded-full border border-border-grey bg-white px-3 py-1 text-sm font-semibold text-charcoal">{s}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {items.map((p) => <ProductCard product={p} docTypes={['eua-fact', 'eua-foi', 'sds']} />)}
+      </div>
+
+      <!-- Emergency + time-limited caution (from the FDA Fact Sheet / label) -->
+      <div class="mt-8 rounded-lg border border-f10-amber/40 bg-f10-amber/10 p-5 text-sm text-medium-grey">
+        <p><span class="font-bold text-charcoal">Important:</span> It is a violation of Federal law to use these
+        products other than as directed in the FDA Fact Sheet. An Emergency Use Authorization is authorized only
+        for the duration of the emergency declaration, unless revoked sooner. Read each Fact Sheet for the
+        authorized animals, use, conditions, and limitations.</p>
+      </div>
+
+      <!-- Cross-pathway pointer (different, narrower species under the FDA Index) -->
+      <p class="mt-6 max-w-3xl rounded-lg border border-border-grey bg-soft-grey p-4 text-sm text-medium-grey">
+        <span class="font-bold text-charcoal">Note:</span> these two products are also listed on the FDA Index
+        of Legally Marketed Unapproved New Animal Drugs for Minor Species, under a
+        <span class="font-semibold">different and narrower authorized-species list</span>. See them on the
+        <a href="/products/treatment" class="font-semibold text-f10-blue hover:underline">Treatment Products</a> page.
+      </p>
+    </div>
+  </section>
+
+  <!-- Distributor CTA -->
+  <section class="dots-blue text-white">
+    <div class="section-inner flex flex-col items-center gap-4 py-14 text-center">
+      <h2 class="text-3xl font-extrabold text-white">Source the FDA EUA products</h2>
+      <p class="max-w-xl text-white/90">The FDA Emergency Use Authorized products are supplied through an authorized US distributor.</p>
+      <a href="/distributors" class="rounded-lg bg-white px-6 py-3 text-sm font-bold text-f10-blue transition hover:bg-light-blue">
+        Find a distributor
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { SITE } from '../../consts';
+import { productsInCategory, getProduct } from '../../data/products';
+
+// TREATMENT PRODUCTS — Pathway A framing (FDA Index / Minor Species).
+// REGULATORY_GUARDRAILS.md: minor/exotic species ONLY; prohibited in dogs, cats,
+// horses, and food-producing species. The two WI products are ALSO EUA-authorized
+// under a DIFFERENT, broader species list — never merged; cross-linked to /products/eua.
+
+// Explicit display order: core antiseptics first, WI products last.
+const order = [
+  'antiseptic-solution-concentrate',
+  'antiseptic-solution-ready-to-use',
+  'antiseptic-barrier-ointment',
+  'antiseptic-barrier-ointment-wi',
+  'antiseptic-wound-spray-wi',
+];
+const items = order.map((s) => getProduct(s)!).filter(Boolean);
+
+// Species line shared by the FDA Index products, verbatim from the FOI Summaries.
+const indexSpecies = 'Raptors, pet birds, captive small mammals, captive reptiles, and captive exotic/zoo mammals';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Products', item: SITE.url + '/products' },
+      { '@type': 'ListItem', position: 3, name: 'Treatment Products', item: SITE.url + '/products/treatment' },
+    ],
+  },
+  ...items.map((p) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: p.name,
+    brand: { '@type': 'Brand', name: 'F10®' },
+    manufacturer: { '@type': 'Organization', name: SITE.company },
+    image: new URL(p.image, SITE.url).href,
+    category: 'Topical antiseptic',
+  })),
+];
+---
+<BaseLayout
+  title="Treatment Products"
+  description="The F10® topical antiseptic treatment range for the US market, including FDA Index (Minor Species) listed products — FOI Summaries and Safety Data Sheets published in full."
+>
+  <Fragment slot="head">
+    {jsonLd.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} is:inline />)}
+  </Fragment>
+
+  <!-- Page hero -->
+  <section class="dots-hero text-white">
+    <div class="section-inner py-16">
+      <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
+        <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span>
+        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> Treatment Products
+      </nav>
+      <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+        F10® antiseptic treatment products
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90">
+        The F10® topical antiseptic range. Four of these products are listed on the FDA Index of Legally
+        Marketed Unapproved New Animal Drugs for Minor Species.
+      </p>
+    </div>
+  </section>
+
+  <!-- FDA Index (Minor Species) framing — Pathway A -->
+  <section class="bg-white">
+    <div class="section-inner py-16">
+      <div class="max-w-3xl">
+        <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
+          FDA Index — Minor Species
+        </span>
+        <h2 class="mt-3 text-3xl font-extrabold">Listed for minor and exotic species</h2>
+        <p class="mt-3 text-charcoal">
+          Per each FOI Summary, the FDA Index-listed products are indexed for use in:
+          <span class="font-semibold">{indexSpecies}</span>. Use is prohibited in dogs, cats, horses, and
+          food-producing species.
+        </p>
+        <p class="mt-3 rounded-lg border border-border-grey bg-soft-grey p-4 text-sm text-medium-grey">
+          <span class="font-bold text-charcoal">Note:</span> the two products carrying an insecticide are
+          <span class="font-semibold">additionally</span> authorized under an FDA Emergency Use Authorization
+          for New World screwworm — a <span class="font-semibold">different and broader authorized-species list</span>
+          (including cattle and horses). See the
+          <a href="/products/eua" class="font-semibold text-f10-blue hover:underline">FDA EUA Products</a> page.
+          Each document states its own authorized animals; the two authorizations are not the same.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((p) => <ProductCard product={p} docTypes={['fda-index', 'sds']} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Distributor CTA -->
+  <section class="dots-blue text-white">
+    <div class="section-inner flex flex-col items-center gap-4 py-14 text-center">
+      <h2 class="text-3xl font-extrabold text-white">Looking to buy F10® in the US?</h2>
+      <p class="max-w-xl text-white/90">F10® is supplied through authorized US distributors.</p>
+      <a href="/distributors" class="rounded-lg bg-white px-6 py-3 text-sm font-bold text-f10-blue transition hover:bg-light-blue">
+        Find a distributor
+      </a>
+    </div>
+  </section>
+</BaseLayout>
