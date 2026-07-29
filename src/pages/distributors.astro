@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+
+// DISTRIBUTORS / WHERE TO BUY (SITE_PLAN.md #6). Wholesale model: F10® is bought
+// through US distributors, split by product type (Amanda 2026-07-29):
+//   - FDA EUA (screwworm) products → DFA Farm Supplies
+//   - all other products          → Viva Pet Supply LLC
+// Contact facts supplied by Amanda. Nothing invented:
+//   - [CONFIRM] DFA full mailing address (only street supplied).
+//   - [CONFIRM] whether the named rep's direct cell (937-622-8855) is published publicly
+//     — held off by default (privacy). Company channels shown.
+
+const distributors = [
+  {
+    scope: 'FDA EUA products',
+    scopeNote:
+      'The FDA Emergency Use Authorized products for New World screwworm — F10® Antiseptic Wound Spray with Insecticide and F10® Antiseptic Barrier Ointment with Insecticide.',
+    name: 'DFA Farm Supplies',
+    address: '5001 Brittonfield Parkway', // [CONFIRM: city / state / ZIP]
+    phone: '866-591-2925',
+    phoneHref: 'tel:8665912925',
+    email: 'orders@dfafarmsupplies.com',
+    website: 'https://dfafarmsupplies.com',
+    websiteLabel: 'dfafarmsupplies.com',
+    contact: {
+      name: 'Meegan Bunaisky',
+      role: 'Purchasing & Vendor Relations Manager',
+      phone: '866-591-2925',
+      phoneHref: 'tel:8665912925',
+      email: 'mbunaisky@dfafarmsupplies.com',
+    },
+  },
+  {
+    scope: 'All other F10® products',
+    scopeNote: 'The disinfectant and treatment range.',
+    name: 'Viva Pet Supply LLC',
+    phone: '+1 (602) 800-8889',
+    phoneHref: 'tel:+16028008889',
+    email: 'info@vivapetsupply.com',
+    website: 'https://www.vivapetsupply.com/',
+    websiteLabel: 'vivapetsupply.com',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Distributors', item: SITE.url + '/distributors' },
+  ],
+};
+---
+<BaseLayout
+  title="Distributors — Where to Buy"
+  description="Where to buy F10® in the US. F10® is supplied through authorized US distributors — one for the FDA Emergency Use Authorized products, one for the rest of the range."
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
+
+  <!-- Page hero -->
+  <section class="dots-hero text-white">
+    <div class="section-inner py-16">
+      <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
+        <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span> Distributors
+      </nav>
+      <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+        Where to buy F10® in the US
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90">
+        F10® is supplied through authorized US distributors. Choose your distributor by product type —
+        the FDA Emergency Use Authorized products and the rest of the range are handled by different partners.
+      </p>
+    </div>
+  </section>
+
+  <!-- Distributor cards -->
+  <section class="bg-white">
+    <div class="section-inner py-16">
+      <div class="grid gap-8 md:grid-cols-2">
+        {distributors.map((d) => (
+          <div class="flex flex-col rounded-[var(--radius-card)] border border-border-grey bg-white p-7">
+            <span class="inline-block self-start rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
+              {d.scope}
+            </span>
+            <p class="mt-3 text-sm text-medium-grey">{d.scopeNote}</p>
+
+            <h2 class="mt-5 text-2xl font-extrabold text-charcoal">{d.name}</h2>
+
+            <dl class="mt-4 space-y-2 text-sm">
+              {d.address && (
+                <div class="flex gap-2">
+                  <dt class="w-16 shrink-0 font-semibold text-medium-grey">Address</dt>
+                  <dd class="text-charcoal">{d.address} <span class="text-medium-grey">[CONFIRM: city / state / ZIP]</span></dd>
+                </div>
+              )}
+              <div class="flex gap-2">
+                <dt class="w-16 shrink-0 font-semibold text-medium-grey">Phone</dt>
+                <dd><a href={d.phoneHref} class="font-semibold text-f10-blue hover:underline">{d.phone}</a></dd>
+              </div>
+              <div class="flex gap-2">
+                <dt class="w-16 shrink-0 font-semibold text-medium-grey">Email</dt>
+                <dd><a href={`mailto:${d.email}`} class="font-semibold text-f10-blue hover:underline">{d.email}</a></dd>
+              </div>
+              <div class="flex gap-2">
+                <dt class="w-16 shrink-0 font-semibold text-medium-grey">Website</dt>
+                <dd><a href={d.website} target="_blank" rel="noopener" class="font-semibold text-f10-red hover:underline">{d.websiteLabel} →</a></dd>
+              </div>
+            </dl>
+
+            {d.contact && (
+              <div class="mt-5 border-t border-border-grey pt-4 text-sm">
+                <p class="text-xs font-bold uppercase tracking-wider text-medium-grey">Contact</p>
+                <p class="mt-1 font-semibold text-charcoal">{d.contact.name}</p>
+                <p class="text-medium-grey">{d.contact.role}</p>
+                <p class="mt-1">
+                  <a href={d.contact.phoneHref} class="font-semibold text-f10-blue hover:underline">{d.contact.phone}</a>
+                  <span class="mx-1 text-border-grey">·</span>
+                  <a href={`mailto:${d.contact.email}`} class="font-semibold text-f10-blue hover:underline">{d.contact.email}</a>
+                </p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-8 max-w-2xl text-sm text-medium-grey">
+        Not sure which product you need? See the <a href="/products" class="font-semibold text-f10-blue hover:underline">product range</a>
+        or the <a href="/credentials" class="font-semibold text-f10-blue hover:underline">credentials &amp; compliance</a> page.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
