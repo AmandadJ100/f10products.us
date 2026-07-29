@@ -45,7 +45,7 @@ const ogImage = image ? new URL(image, Astro.site ?? SITE.url).href : undefined;
   </head>
   <body class="flex min-h-screen flex-col">
     <Header />
-    <main class="flex-1">
+    <main class="flex-1 pt-4">
       <slot />
     </main>
     <Footer />
