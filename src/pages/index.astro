@@ -67,13 +67,12 @@ const audiences = [
         <p class="mb-3 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
           Clinical · Assured · International
         </p>
-        <h1 class="text-white text-4xl font-black leading-[1.05] sm:text-5xl">
-          Professional-grade disinfection, trusted worldwide.
+        <h1 class="text-white text-4xl font-black leading-[1.05] sm:text-5xl text-balance">
+          Scientifically proven infection control for animal health and biosecurity
         </h1>
         <p class="mt-4 max-w-xl text-lg text-white/90">
-          F10® veterinary and biosecurity disinfectants, now presented for the US market — with the
-          evidence, credentials, and FDA Emergency Use Authorized documentation professionals verify
-          before they buy.
+          F10® veterinary and biosecurity disinfectants — with the evidence, credentials, and FDA
+          Emergency Use Authorized documentation professionals verify before they buy.
         </p>
         <div class="mt-7 flex flex-wrap gap-3">
           <a href="/products" class="rounded-lg bg-f10-red px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:brightness-110">
@@ -118,8 +117,13 @@ const audiences = [
           (<em>Cochliomyia hominivorax</em>) larvae — myiasis — in the following animals:
         </p>
         <ul class="mt-4 flex flex-wrap gap-2">
-          {euaSpecies.map((s) => (
-            <li class="rounded-full border border-border-grey bg-white px-3 py-1 text-sm font-semibold text-charcoal">{s}</li>
+          {euaSpecies.map((s, i) => (
+            <>
+              <li class="rounded-full border border-border-grey bg-white px-3 py-1 text-sm font-semibold text-charcoal">{s}</li>
+              {/* Break the row after "Raptors" so "Pet birds" and the long
+                  "Captive & captured…" chip sit together on the next line. */}
+              {i === 3 && <li class="basis-full" aria-hidden="true"></li>}
+            </>
           ))}
         </ul>
       </div>
@@ -159,7 +163,7 @@ const audiences = [
       <p class="mt-2 max-w-2xl text-medium-grey">
         The US-registered range. <span class="font-semibold">[CONFIRM: which products are cleared for US sale, and under which body.]</span>
       </p>
-      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-8 grid gap-6 sm:grid-cols-2">
         {productCategories.map((c) => <Card {...c} fit="contain" eager />)}
       </div>
     </div>
