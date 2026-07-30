@@ -28,6 +28,6 @@ export const NAV = [
 // so the dropdown lists the other regions (DESIGN.md header note).
 // [CONFIRM: exact regional URLs before wiring live.]
 export const REGIONS = [
-  { label: 'United Kingdom', href: 'https://www.f10.co.uk/' },
+  { label: 'United Kingdom', href: 'https://f10products.co.uk/' },
   { label: 'South Africa', href: 'https://f10products.co.za/' },
 ] as const;
