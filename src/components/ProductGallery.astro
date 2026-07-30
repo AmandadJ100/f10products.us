@@ -1,0 +1,61 @@
+---
+// Product pack-shot gallery: group shot on top, one thumbnail per individual
+// pack size below (click swaps the main image), mirroring the SA product page.
+// Thumbnails only render when there is more than one pack size.
+interface Pack { size: string; image: string }
+interface Props {
+  name: string;
+  image: string;      // group / default pack shot
+  imageAlt: string;
+  packs?: Pack[];
+}
+const { name, image, imageAlt, packs = [] } = Astro.props;
+const showThumbs = packs.length > 1;
+const thumbBase = 'flex h-16 w-16 items-center justify-center overflow-hidden rounded-md border bg-white p-1 transition';
+---
+<div data-gallery class="flex flex-col gap-4">
+  <div class="flex items-center justify-center rounded-[var(--radius-card)] border border-border-grey bg-soft-grey p-8">
+    <img data-gallery-main src={image} alt={imageAlt} width="600" height="600"
+         class="h-80 w-auto object-contain" loading="eager" decoding="async" />
+  </div>
+
+  {showThumbs && (
+    <ul class="flex flex-wrap gap-3" aria-label="Pack sizes">
+      <li class="flex flex-col items-center gap-1">
+        <button type="button" data-src={image} data-alt={imageAlt}
+                class={`${thumbBase} border-f10-blue ring-2 ring-f10-blue/40`} aria-label={`${name} — full range`}>
+          <img src={image} alt="" class="h-full w-full object-contain" loading="lazy" decoding="async" />
+        </button>
+        <span class="text-[11px] font-semibold text-medium-grey">Range</span>
+      </li>
+      {packs.map((pk) => (
+        <li class="flex flex-col items-center gap-1">
+          <button type="button" data-src={pk.image} data-alt={`${name} — ${pk.size}`}
+                  class={`${thumbBase} border-border-grey hover:border-f10-blue`} aria-label={`${name} — ${pk.size}`}>
+            <img src={pk.image} alt={`${name} ${pk.size} pack`} class="h-full w-full object-contain" loading="lazy" decoding="async" />
+          </button>
+          <span class="text-[11px] font-semibold text-medium-grey">{pk.size}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+<script>
+  const ACTIVE = ['border-f10-blue', 'ring-2', 'ring-f10-blue/40'];
+  const IDLE = ['border-border-grey', 'hover:border-f10-blue'];
+  document.querySelectorAll('[data-gallery]').forEach((gallery) => {
+    const main = gallery.querySelector('[data-gallery-main]') as HTMLImageElement | null;
+    const thumbs = gallery.querySelectorAll<HTMLButtonElement>('button[data-src]');
+    if (!main) return;
+    thumbs.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        main.src = btn.dataset.src || main.src;
+        main.alt = btn.dataset.alt || '';
+        thumbs.forEach((t) => { t.classList.remove(...ACTIVE); t.classList.add(...IDLE); });
+        btn.classList.remove(...IDLE);
+        btn.classList.add(...ACTIVE);
+      });
+    });
+  });
+</script>

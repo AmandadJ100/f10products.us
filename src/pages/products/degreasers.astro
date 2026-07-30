@@ -4,12 +4,12 @@ import ProductCard from '../../components/ProductCard.astro';
 import { SITE } from '../../consts';
 import { productsInCategory } from '../../data/products';
 
-// DISINFECTANTS category. Structure-first: factual/organisational copy only.
+// DEGREASERS category. Structure-first: factual/organisational copy only.
 // No efficacy, spectrum, kill, or dilution claims, and no US registration
-// number until Amanda supplies it (EPA product status pending) —
-// REGULATORY_GUARDRAILS.md. SDS links are factual safety documents.
+// number until Amanda supplies it — REGULATORY_GUARDRAILS.md. SDS links are
+// factual safety documents.
 
-const items = productsInCategory('disinfectants');
+const items = productsInCategory('degreasers');
 
 const jsonLd = [
   {
@@ -18,7 +18,7 @@ const jsonLd = [
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
       { '@type': 'ListItem', position: 2, name: 'Products', item: SITE.url + '/products' },
-      { '@type': 'ListItem', position: 3, name: 'Disinfectants', item: SITE.url + '/products/disinfectants' },
+      { '@type': 'ListItem', position: 3, name: 'Degreasers', item: SITE.url + '/products/degreasers' },
     ],
   },
   ...items.map((p) => ({
@@ -28,13 +28,13 @@ const jsonLd = [
     brand: { '@type': 'Brand', name: 'F10®' },
     manufacturer: { '@type': 'Organization', name: SITE.company },
     image: new URL(p.image, SITE.url).href,
-    category: 'Veterinary disinfectant',
+    category: 'Degreaser',
   })),
 ];
 ---
 <BaseLayout
-  title="Disinfectants"
-  description="The F10® veterinary disinfectant range for the US market — surface and environmental disinfection products, each with its Safety Data Sheet."
+  title="Degreasers"
+  description="The F10® degreaser range for the US market — biofilm removal for professional cleaning routines, with Safety Data Sheets."
 >
   <Fragment slot="head">
     {jsonLd.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} is:inline />)}
@@ -45,14 +45,14 @@ const jsonLd = [
     <div class="section-inner py-16">
       <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
         <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span>
-        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> Disinfectants
+        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> Degreasers
       </nav>
       <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
-        F10® veterinary disinfectants
+        F10® degreasers
       </h1>
       <p class="mt-4 max-w-2xl text-lg text-white/90">
-        The F10® disinfectant range for surface and environmental disinfection in professional
-        veterinary and biosecurity settings.
+        The F10® degreaser range for biofilm removal in professional veterinary and biosecurity
+        cleaning routines.
       </p>
     </div>
   </section>
@@ -60,10 +60,10 @@ const jsonLd = [
   <!-- Products -->
   <section class="bg-white">
     <div class="section-inner py-16">
-      <h2 class="text-3xl font-extrabold">The disinfectant range</h2>
+      <h2 class="text-3xl font-extrabold">The degreaser range</h2>
       <!-- US registration wording is supplied by Amanda, verbatim, when confirmed. -->
       <p class="mt-2 max-w-2xl rounded-lg border border-dashed border-border-grey bg-soft-grey p-4 text-sm italic text-medium-grey">
-        [CONFIRM: US registration status + wording for the disinfectant range (EPA product status pending)]
+        [CONFIRM: US registration status + wording for the degreaser range]
       </p>
       <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((p) => <ProductCard product={p} />)}

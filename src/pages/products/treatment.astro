@@ -29,7 +29,7 @@ const jsonLd = [
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
       { '@type': 'ListItem', position: 2, name: 'Products', item: SITE.url + '/products' },
-      { '@type': 'ListItem', position: 3, name: 'Treatment Products', item: SITE.url + '/products/treatment' },
+      { '@type': 'ListItem', position: 3, name: 'Skin Treatments', item: SITE.url + '/products/treatment' },
     ],
   },
   ...items.map((p) => ({
@@ -44,8 +44,8 @@ const jsonLd = [
 ];
 ---
 <BaseLayout
-  title="Treatment Products"
-  description="The F10® topical antiseptic treatment range for the US market, including FDA Index (Minor Species) listed products — FOI Summaries and Safety Data Sheets published in full."
+  title="Skin Treatments"
+  description="The F10® topical antiseptic skin treatment range for the US market, including FDA Index (Minor Species) listed products — FOI Summaries and Safety Data Sheets published in full."
 >
   <Fragment slot="head">
     {jsonLd.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} is:inline />)}
@@ -56,10 +56,10 @@ const jsonLd = [
     <div class="section-inner py-16">
       <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
         <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span>
-        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> Treatment Products
+        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> Skin Treatments
       </nav>
       <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
-        F10® antiseptic treatment products
+        F10® antiseptic skin treatments
       </h1>
       <p class="mt-4 max-w-2xl text-lg text-white/90">
         The F10® topical antiseptic range. Four of these products are listed on the FDA Index of Legally
@@ -92,7 +92,7 @@ const jsonLd = [
       </div>
 
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((p) => <ProductCard product={p} docTypes={['fda-index', 'sds']} />)}
+        {items.map((p) => <ProductCard product={p} />)}
       </div>
     </div>
   </section>

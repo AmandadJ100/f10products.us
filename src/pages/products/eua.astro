@@ -38,7 +38,7 @@ const jsonLd = [
     name: p.name,
     brand: { '@type': 'Brand', name: 'F10®' },
     manufacturer: { '@type': 'Organization', name: SITE.company },
-    image: new URL(p.image, SITE.url).href,
+    image: new URL(p.imageEua ?? p.image, SITE.url).href,
     category: 'FDA Emergency Use Authorized',
   })),
 ];
@@ -88,7 +88,7 @@ const jsonLd = [
       </div>
 
       <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {items.map((p) => <ProductCard product={p} docTypes={['eua-fact', 'eua-foi', 'sds']} />)}
+        {items.map((p) => <ProductCard product={p} image={p.imageEua} imageAlt={p.imageEuaAlt} />)}
       </div>
 
       <!-- Emergency + time-limited caution (from the FDA Fact Sheet / label) -->
@@ -104,7 +104,7 @@ const jsonLd = [
         <span class="font-bold text-charcoal">Note:</span> these two products are also listed on the FDA Index
         of Legally Marketed Unapproved New Animal Drugs for Minor Species, under a
         <span class="font-semibold">different and narrower authorized-species list</span>. See them on the
-        <a href="/products/treatment" class="font-semibold text-f10-blue hover:underline">Treatment Products</a> page.
+        <a href="/products/treatment" class="font-semibold text-f10-blue hover:underline">Skin Treatments</a> page.
       </p>
     </div>
   </section>

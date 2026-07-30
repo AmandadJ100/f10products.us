@@ -1,54 +1,40 @@
 ---
-import type { Product, DocType } from '../data/products';
+import type { Product } from '../data/products';
+import { productHref } from '../data/products';
 
-// Reusable product tile for the category listing pages. Image sizing is baked
-// in (fixed height + object-contain) so the SA "tiny cards" bug can't recur.
-// Pathway framing is controlled by the page: it passes which doc types to show,
-// so the same product can appear under EUA (Fact Sheet) and Treatment (FDA Index)
-// without the two authorisations ever being merged.
+// Minimal product tile for the category listing pages: group packshot + name +
+// one-line summary + "View product" link. The bulk of the information lives on
+// each product's individual page (/product/[slug]). Image sizing is baked in
+// (fixed height + object-contain) so the SA "tiny cards" bug can't recur.
 interface Props {
   product: Product;
-  /** Which document types to surface on this page, in display order. */
-  docTypes: DocType[];
+  /** Override the pack image (e.g. the EUA-labelled pack on /products/eua). */
+  image?: string;
+  imageAlt?: string;
   /** Heading level for the product name (default h3). */
   headingLevel?: 2 | 3;
 }
-const { product, docTypes, headingLevel = 3 } = Astro.props;
+const { product, image, imageAlt, headingLevel = 3 } = Astro.props;
 const Heading = `h${headingLevel}` as const;
-
-const docs = docTypes
-  .flatMap((t) => product.docs.filter((d) => d.type === t));
-const showSdsPending = product.sdsPending && docTypes.includes('sds');
+const imgSrc = image ?? product.image;
+const imgAlt = imageAlt ?? product.imageAlt;
+const href = productHref(product);
 ---
-<article class="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-border-grey bg-white transition-all duration-200 hover:border-f10-blue hover:shadow-[0_6px_14px_rgba(14,119,188,0.14)]">
+<a href={href}
+   class="group flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-border-grey bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-f10-blue hover:shadow-[0_6px_14px_rgba(14,119,188,0.14)]">
   <div class="flex h-56 w-full items-center justify-center overflow-hidden bg-soft-grey p-4">
-    <img src={product.image} alt={product.imageAlt} loading="lazy" decoding="async"
-         class="h-full w-auto object-contain" />
+    <img src={imgSrc} alt={imgAlt} loading="lazy" decoding="async"
+         class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
   </div>
-  <div class="flex flex-1 flex-col gap-3 p-5">
-    <Heading class="text-lg font-extrabold leading-tight text-charcoal">{product.name}</Heading>
+  <div class="flex flex-1 flex-col gap-2 p-5">
+    <Heading class="text-lg font-extrabold leading-tight text-charcoal group-hover:text-f10-blue">{product.name}</Heading>
 
-    {product.sizes.length > 0 && (
-      <ul class="flex flex-wrap gap-1.5" aria-label="Available sizes">
-        {product.sizes.map((s) => (
-          <li class="rounded-full border border-border-grey bg-soft-grey px-2.5 py-0.5 text-xs font-semibold text-medium-grey">{s}</li>
-        ))}
-      </ul>
+    {product.description ? (
+      <p class="text-sm leading-relaxed text-medium-grey">{product.description}</p>
+    ) : (
+      <p class="text-xs italic text-medium-grey">[CONTENT SLOT: product summary — supplied copy pending]</p>
     )}
 
-    <!-- Structure-first: US overview supplied by Amanda, verbatim, when confirmed. -->
-    <p class="rounded-md border border-dashed border-border-grey bg-soft-grey px-3 py-2 text-xs italic text-medium-grey">
-      [CONTENT SLOT: US product overview — supplied copy pending]
-    </p>
-
-    <div class="mt-auto flex flex-col gap-1 pt-1">
-      {docs.map((d) => (
-        <a href={d.href} target="_blank" rel="noopener"
-           class="text-sm font-semibold text-f10-blue hover:underline">{d.label} →</a>
-      ))}
-      {showSdsPending && (
-        <span class="text-sm font-semibold text-medium-grey">Safety Data Sheet (SDS) — to follow</span>
-      )}
-    </div>
+    <span class="mt-auto pt-1 text-sm font-bold text-f10-blue">View product <span aria-hidden="true">›</span></span>
   </div>
-</article>
+</a>

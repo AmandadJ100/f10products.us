@@ -28,7 +28,7 @@ const jsonLd = {
 ---
 <BaseLayout
   title="Products"
-  description="The F10® US product range — FDA Emergency Use Authorized products, veterinary disinfectants, and topical antiseptic treatments. Documents published in full."
+  description="The F10® US product range — FDA Emergency Use Authorized products, veterinary disinfectants, degreasers, and topical antiseptic skin treatments. Documents published in full."
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
@@ -58,7 +58,7 @@ const jsonLd = {
       <p class="mt-2 max-w-2xl text-medium-grey">
         Choose a group to see its products and documents.
       </p>
-      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-8 grid gap-6 sm:grid-cols-2">
         {cards.map((c) => <Card {...c} fit="contain" eager />)}
       </div>
     </div>

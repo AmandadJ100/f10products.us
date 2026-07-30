@@ -4,9 +4,12 @@
 // Sites right), then a nav row with centred links + a compact search field.
 // Wholesale business → no "Buy now". US site → US is current, dropdown lists other regions.
 import { NAV, REGIONS, SITE } from '../consts';
+import { categories } from '../data/products';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+// Products is active for the hub, the category pages, and the /product/[slug] pages.
+const productsActive = path.startsWith('/products') || path.startsWith('/product/');
 ---
 <header class="dots-blue text-white">
   <!-- Top banner: 3 columns -->
@@ -52,15 +55,36 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   <nav class="border-t border-white/15 bg-f10-blue-deep/40" aria-label="Primary">
     <div class="section-inner flex flex-wrap items-center justify-center gap-x-1 gap-y-2 py-2">
       {NAV.map((item) => (
-        <a
-          href={item.href}
-          aria-current={isActive(item.href) ? 'page' : undefined}
-          class:list={[
-            'rounded px-3 py-1.5 text-sm font-semibold text-white transition-colors',
-            'border-b-2 border-transparent hover:border-f10-red',
-            isActive(item.href) && 'border-f10-red',
-          ]}
-        >{item.label}</a>
+        item.href === '/products' ? (
+          <details class="group relative">
+            <summary
+              class:list={[
+                'flex cursor-pointer list-none items-center gap-1 rounded px-3 py-1.5 text-sm font-semibold text-white transition-colors',
+                'border-b-2 border-transparent hover:border-f10-red',
+                productsActive && 'border-f10-red',
+              ]}
+            >
+              Products
+              <span class="text-xs transition-transform group-open:rotate-180" aria-hidden="true">▾</span>
+            </summary>
+            <ul class="absolute left-1/2 z-30 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-lg bg-white text-charcoal shadow-lg ring-1 ring-border-grey">
+              <li><a href="/products" class="block border-b border-border-grey px-4 py-2 text-sm font-bold hover:bg-soft-grey">All Products</a></li>
+              {categories.map((c) => (
+                <li><a href={c.href} class="block px-4 py-2 text-sm hover:bg-soft-grey">{c.label}</a></li>
+              ))}
+            </ul>
+          </details>
+        ) : (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            class:list={[
+              'rounded px-3 py-1.5 text-sm font-semibold text-white transition-colors',
+              'border-b-2 border-transparent hover:border-f10-red',
+              isActive(item.href) && 'border-f10-red',
+            ]}
+          >{item.label}</a>
+        )
       ))}
       <!-- Compact search field (magnifier). [Wire to /resources search later] -->
       <form action="/search" method="get" role="search" class="ml-2 flex items-center">
