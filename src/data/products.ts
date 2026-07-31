@@ -52,7 +52,7 @@ export const products: Product[] = [
   {
     slug: 'antiseptic-wound-spray-wi',
     name: 'F10® Antiseptic Wound Spray with Insecticide',
-    categories: ['eua', 'treatment'],
+    categories: ['eua'],
     image: '/products/treatment/antiseptic-wound-spray-wi.webp',
     imageAlt: 'F10® Antiseptic Wound Spray with Insecticide range',
     imageEua: '/products/eua-wound-spray.webp',
@@ -69,7 +69,6 @@ export const products: Product[] = [
     docs: [
       { type: 'eua-fact', label: 'FDA EUA Fact Sheet (No. 006672)', href: `${DOC}/f10-wound-spray-eua-fact-sheet.pdf` },
       { type: 'eua-foi', label: 'EUA FOI Summary', href: `${DOC}/f10-wound-spray-eua-foi-sheet.pdf` },
-      { type: 'fda-index', label: 'FDA Index FOI Summary (MIF 900-010)', href: `${DOC}/f10-wound-spray-wi-fda-index-foi.pdf` },
       { type: 'sds', label: 'Safety Data Sheet (SDS)', href: `${SDS}/sds-antiseptic-wound-spray-wi.pdf` },
     ],
     overview: null,
@@ -77,7 +76,7 @@ export const products: Product[] = [
   {
     slug: 'antiseptic-barrier-ointment-wi',
     name: 'F10® Antiseptic Barrier Ointment with Insecticide',
-    categories: ['eua', 'treatment'],
+    categories: ['eua'],
     image: '/products/treatment/antiseptic-barrier-ointment-wi.webp',
     imageAlt: 'F10® Antiseptic Barrier Ointment with Insecticide range',
     imageEua: '/products/eua-barrier-ointment.webp',
@@ -94,7 +93,6 @@ export const products: Product[] = [
     docs: [
       { type: 'eua-fact', label: 'FDA EUA Fact Sheet (No. 006677)', href: `${DOC}/f10-barrier-ointment-eua-fact-sheet.pdf` },
       { type: 'eua-foi', label: 'EUA FOI Summary', href: `${DOC}/f10-barrier-ointment-eua-foi-sheet.pdf` },
-      { type: 'fda-index', label: 'FDA Index FOI Summary (MIF 900-011)', href: `${DOC}/f10-barrier-ointment-wi-fda-index-foi.pdf` },
       { type: 'sds', label: 'Safety Data Sheet (SDS)', href: `${SDS}/sds-antiseptic-barrier-ointment-wi.pdf` },
     ],
     overview: null,
@@ -257,6 +255,58 @@ export const products: Product[] = [
     docs: [
       { type: 'fda-index', label: 'FDA Index FOI Summary (MIF 900-009)', href: `${DOC}/f10-barrier-ointment-fda-index-foi.pdf` },
       { type: 'sds', label: 'Safety Data Sheet (SDS)', href: `${SDS}/sds-antiseptic-barrier-ointment.pdf` },
+    ],
+    overview: null,
+  },
+
+  // --- FDA Index (MUMS) insecticide variants -------------------------------
+  // Separate products from the FDA EUA versions above: SAME product name, but a
+  // DIFFERENT label and a DIFFERENT (narrower, minor-species) authorization
+  // pathway. Kept totally separate per REGULATORY_GUARDRAILS.md — Index FOI
+  // Summary only; never carry the EUA docs/species here.
+  {
+    slug: 'antiseptic-wound-spray-wi-index',
+    name: 'F10® Antiseptic Wound Spray with Insecticide',
+    categories: ['treatment'],
+    image: '/products/treatment/antiseptic-wound-spray-wi.webp',
+    imageAlt: 'F10® Antiseptic Wound Spray with Insecticide range',
+    sizes: ['3.05 fl oz', '16.9 fl oz'],
+    packs: [
+      { size: '3.05 fl oz', image: '/products/treatment/antiseptic-wound-spray-wi-100ml.webp' },
+      { size: '16.9 fl oz', image: '/products/treatment/antiseptic-wound-spray-wi-500ml.webp' },
+    ],
+    description: 'A broad spectrum topical antiseptic spot treatment with insecticide.',
+    activeIngredients: [
+      'Benzalkonium chloride — 0.405 g/100 ml',
+      'Polyhexanide — 0.03 g/100 ml',
+      'Cypermethrin — 0.25 g/100 g',
+    ],
+    docs: [
+      { type: 'fda-index', label: 'FDA Index FOI Summary (MIF 900-010)', href: `${DOC}/f10-wound-spray-wi-fda-index-foi.pdf` },
+      { type: 'sds', label: 'Safety Data Sheet (SDS)', href: `${SDS}/sds-antiseptic-wound-spray-wi.pdf` },
+    ],
+    overview: null,
+  },
+  {
+    slug: 'antiseptic-barrier-ointment-wi-index',
+    name: 'F10® Antiseptic Barrier Ointment with Insecticide',
+    categories: ['treatment'],
+    image: '/products/treatment/antiseptic-barrier-ointment-wi.webp',
+    imageAlt: 'F10® Antiseptic Barrier Ointment with Insecticide range',
+    sizes: ['3.05 oz', '17.6 oz'],
+    packs: [
+      { size: '3.05 oz', image: '/products/treatment/antiseptic-barrier-ointment-wi-100g.webp' },
+      { size: '17.6 oz', image: '/products/treatment/antiseptic-barrier-ointment-wi-500g.webp' },
+    ],
+    description: 'A broad spectrum topical antiseptic ointment with insecticide.',
+    activeIngredients: [
+      'Benzalkonium chloride — 0.405 g/100 ml',
+      'Polyhexanide — 0.03 g/100 ml',
+      'Cypermethrin — 0.25 g/100 g',
+    ],
+    docs: [
+      { type: 'fda-index', label: 'FDA Index FOI Summary (MIF 900-011)', href: `${DOC}/f10-barrier-ointment-wi-fda-index-foi.pdf` },
+      { type: 'sds', label: 'Safety Data Sheet (SDS)', href: `${SDS}/sds-antiseptic-barrier-ointment-wi.pdf` },
     ],
     overview: null,
   },

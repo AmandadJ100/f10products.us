@@ -16,7 +16,6 @@ export const SITE = {
 // Primary navigation. US-registered range only; labels are structural, not claims.
 export const NAV = [
   { label: 'Products', href: '/products' },
-  { label: 'Who We Serve', href: '/who-we-serve' },
   { label: 'Credentials', href: '/credentials' },
   { label: 'Resources', href: '/resources' },
   { label: 'Distributors', href: '/distributors' },
