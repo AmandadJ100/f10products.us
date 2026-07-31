@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+
+// ABOUT — adapted from the SA staging About page, US-framed (SITE_PLAN.md #8).
+// Corporate facts (founding, facility, product/country counts, leadership) are
+// F10's own approved figures, ported with US framing. NOTHING regulated is
+// authored here: FDA/EPA credentials are referenced as pathways and linked to
+// the Credentials page (REGULATORY_GUARDRAILS.md) — no efficacy/registration
+// claims. Manufacturing in South Africa is stated openly (Amanda 2026-07-31):
+// provenance transparency is a trust asset for a US regulatory audience.
+
+// Corporate facts — F10's own figures. [CONFIRM: countries — using 36 for now.]
+const stats = [
+  { value: '1994', label: 'Established' },
+  { value: '4,150 m²', label: 'GMP-licensed facility' },
+  { value: 'ISO 9001:2015', label: 'Quality management certified' },
+  { value: '50+', label: 'Products worldwide' },
+  { value: '36', label: 'Countries supplied' },
+];
+
+// US-relevant regulatory standing — referenced only; documents live on /credentials.
+const usCredentials = [
+  'FDA Emergency Use Authorized',
+  'FDA Index (Minor Species)',
+  'EPA Establishment No. 79755zaf001',
+  'GMP compliance',
+  'ISO 9001:2015',
+];
+
+// Leadership — names/titles are corporate fact; photos are placeholders (Amanda 2026-07-31).
+const leaders = [
+  { name: 'John Temperley', title: 'Founder & Chairman' },
+  { name: 'Ian Temperley', title: 'Managing Director' },
+  { name: 'Phillip Human', title: 'General Manager' },
+  { name: 'Linda Muller', title: 'Technical Advisor' },
+];
+const initials = (n: string) => n.split(' ').map((w) => w[0]).join('').slice(0, 2);
+
+// Manufacturer address — full, consistent wording for SEO entity consistency.
+const address = {
+  street: 'Cnr. Leader & Hoefsmid Streets',
+  suburb: 'Stormill Ext. 10',
+  city: 'Roodepoort',
+  postal: '1709',
+  country: 'South Africa',
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'About', item: SITE.url + '/about' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About F10®',
+    url: SITE.url + '/about',
+    mainEntity: {
+      '@type': 'Organization',
+      name: `${SITE.brand} — ${SITE.company}`,
+      url: SITE.url,
+      foundingDate: '1994',
+      email: SITE.email,
+      telephone: SITE.phone,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: `${address.street}, ${address.suburb}`,
+        addressLocality: address.city,
+        postalCode: address.postal,
+        addressCountry: 'ZA',
+      },
+    },
+  },
+];
+---
+<BaseLayout
+  title="About F10®"
+  description="F10® is manufactured by Health and Hygiene (Pty) Ltd, a GMP-licensed pharmaceutical manufacturer established in 1994 and supplied to professionals in 36 countries — now available in the United States."
+>
+  <Fragment slot="head">
+    {jsonLd.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} is:inline />)}
+  </Fragment>
+
+  <!-- Page hero -->
+  <section class="dots-hero text-white">
+    <div class="section-inner py-16">
+      <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
+        <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span> About
+      </nav>
+      <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+        About F10®
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90">
+        Since 1994, F10® has manufactured veterinary and biosecurity disinfectants trusted by
+        professionals in 36 countries — now available in the United States.
+      </p>
+    </div>
+  </section>
+
+  <!-- Our Story -->
+  <section class="bg-white">
+    <div class="section-inner grid gap-10 py-16 md:grid-cols-2 md:items-center">
+      <div class="max-w-xl">
+        <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
+          Our story
+        </span>
+        <h2 class="mt-3 text-3xl font-extrabold">A specialist manufacturer since 1994</h2>
+        <div class="mt-4 flex flex-col gap-3 text-charcoal">
+          <p>
+            F10® is the professional hygiene range of {SITE.company}, a pharmaceutical manufacturer
+            established in 1994. The company develops and produces disinfectants and antiseptics for
+            animal health, biosecurity and environmental hygiene.
+          </p>
+          <p>
+            Manufacturing is based at a 4,150 m² GMP-licensed facility in {address.city}, South Africa.
+            The F10® range spans more than 50 products worldwide and is supplied to professionals in
+            36 countries, with development guided by effectiveness, safety and environmental responsibility.
+          </p>
+        </div>
+      </div>
+      <!-- [CONTENT SLOT: manufacturing facility photo — supplied image pending] -->
+      <div class="flex h-64 items-center justify-center rounded-[var(--radius-card)] border border-dashed border-border-grey bg-soft-grey text-sm italic text-medium-grey md:h-80">
+        [Image: GMP-licensed manufacturing facility, {address.city}]
+      </div>
+    </div>
+  </section>
+
+  <!-- Made in South Africa — manufacturing transparency -->
+  <section class="dots-light">
+    <div class="section-inner py-16">
+      <div class="max-w-3xl">
+        <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
+          Made in South Africa
+        </span>
+        <h2 class="mt-3 text-3xl font-extrabold">Manufactured to international standards</h2>
+        <p class="mt-3 text-charcoal">
+          F10® products are manufactured by {SITE.company} in South Africa and supplied to the United States
+          and 35 other countries. The same products that reach US professionals are made under recognised
+          Good Manufacturing Practice and ISO 9001:2015 quality-management systems, and are accepted onto US
+          regulatory pathways including the FDA Index for Minor Species and FDA Emergency Use Authorization.
+        </p>
+        <p class="mt-3 text-charcoal">
+          F10®'s EPA-registered disinfectants are registered for sale in 49 US states — every state except Hawaii.
+        </p>
+        <p class="mt-4 text-sm text-medium-grey">
+          Manufacturer: {SITE.company}, {address.street}, {address.suburb}, {address.city},
+          {' '}{address.postal}, {address.country}.
+        </p>
+        <a href="/credentials" class="mt-6 inline-block text-sm font-bold text-f10-blue hover:underline">
+          See our credentials &amp; compliance documents <span aria-hidden="true">›</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Credentials at a glance -->
+  <section class="bg-white">
+    <div class="section-inner py-16">
+      <div class="max-w-3xl">
+        <h2 class="text-3xl font-extrabold">Credentials at a glance</h2>
+      </div>
+      <dl class="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+        {stats.map((s) => (
+          <div class="rounded-[var(--radius-card)] border border-border-grey bg-white p-5 text-center">
+            <dt class="text-2xl font-black text-f10-blue">{s.value}</dt>
+            <dd class="mt-1 text-xs font-semibold uppercase tracking-wide text-medium-grey">{s.label}</dd>
+          </div>
+        ))}
+      </dl>
+      <div class="mt-8">
+        <p class="text-xs font-bold uppercase tracking-wider text-medium-grey">US regulatory standing</p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {usCredentials.map((c) => (
+            <li class="rounded-full border border-border-grey bg-soft-grey px-3 py-1 text-sm font-semibold text-charcoal">{c}</li>
+          ))}
+        </ul>
+        <a href="/credentials" class="mt-4 inline-block text-sm font-bold text-f10-blue hover:underline">
+          View the full documents <span aria-hidden="true">›</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our People -->
+  <section class="dots-light">
+    <div class="section-inner grid gap-10 py-16 md:grid-cols-2 md:items-center">
+      <!-- [CONTENT SLOT: team photo — supplied image pending] -->
+      <div class="order-2 flex h-64 items-center justify-center rounded-[var(--radius-card)] border border-dashed border-border-grey bg-white text-sm italic text-medium-grey md:order-1 md:h-72">
+        [Image: F10® team]
+      </div>
+      <div class="order-1 max-w-xl md:order-2">
+        <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
+          Our people
+        </span>
+        <h2 class="mt-3 text-3xl font-extrabold">The team behind F10®</h2>
+        <p class="mt-4 text-charcoal">
+          F10® is made by a team that takes pride in its work across research, manufacturing and quality —
+          from formulation and production to the technical support that stands behind the range in the field.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Leadership -->
+  <section class="bg-white">
+    <div class="section-inner py-16">
+      <h2 class="text-3xl font-extrabold">Our leadership</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {leaders.map((l) => (
+          <div class="flex flex-col items-center rounded-[var(--radius-card)] border border-border-grey bg-white p-6 text-center">
+            <!-- [Placeholder avatar — supplied leadership photo pending] -->
+            <div class="flex h-20 w-20 items-center justify-center rounded-full bg-f10-blue text-xl font-black text-white" aria-hidden="true">
+              {initials(l.name)}
+            </div>
+            <h3 class="mt-4 text-base font-extrabold leading-tight text-charcoal">{l.name}</h3>
+            <p class="mt-1 text-sm text-medium-grey">{l.title}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Distributor CTA -->
+  <section class="dots-blue text-white">
+    <div class="section-inner flex flex-col items-center gap-4 py-14 text-center">
+      <h2 class="text-3xl font-extrabold text-white">Work with F10®</h2>
+      <p class="max-w-xl text-white/90">F10® is supplied in the US through authorized distributors.</p>
+      <a href="/distributors" class="rounded-lg bg-white px-6 py-3 text-sm font-bold text-f10-blue transition hover:bg-light-blue">
+        Find a distributor
+      </a>
+    </div>
+  </section>
+</BaseLayout>
