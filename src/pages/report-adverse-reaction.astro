@@ -1,0 +1,494 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, ADVERSE_FORM_ID } from '../consts';
+
+// REPORT AN ADVERSE REACTION — online version of FDA Form 1932a (Veterinary
+// Adverse Drug Reaction), required under the FDA EUA for New World screwworm.
+// Fields mirror the supplied FDA_1932a_fillable_layout.pdf verbatim (labels are
+// the form's own — no authored regulatory content). Two ways to file:
+//   1. Fill in online (Formspree backend → manufacturer pharmacovigilance mailbox)
+//   2. Download the PDF and return it by email.
+// Also links the FDA's own direct reporting channel (guardrails).
+
+const formReady = Boolean(ADVERSE_FORM_ID);
+const formAction = formReady ? `https://formspree.io/f/${ADVERSE_FORM_ID}` : '#';
+const PDF = '/documents/fda-1932a-adverse-reaction-form.pdf';
+
+const inputCls =
+  'mt-1 w-full rounded-lg border border-border-grey bg-white px-3 py-2 text-sm text-charcoal focus:border-f10-blue focus:outline-none focus:ring-2 focus:ring-f10-blue/30';
+const labelCls = 'block text-sm font-semibold text-charcoal';
+const legendCls =
+  'inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue';
+
+// Person-detail fields shared by Sender / Health-care professional / Owner blocks.
+const personFields = [
+  { key: 'first_name', label: 'First Name' },
+  { key: 'last_name', label: 'Last Name' },
+  { key: 'street', label: 'Street Address' },
+  { key: 'city', label: 'City' },
+  { key: 'state', label: 'State or Province' },
+  { key: 'zip', label: 'Postal/ZIP Code' },
+  { key: 'country', label: 'Country' },
+  { key: 'telephone', label: 'Telephone Number' },
+  { key: 'telephone_other', label: 'Telephone Number (Other)' },
+  { key: 'email', label: 'Email Address', type: 'email' },
+];
+
+const speciesList = [
+  'Budgerigar', 'Cat', 'Cattle', 'Cockatiel', 'Cockatoo', 'Dog', 'Ferret',
+  'Goat', 'Guinea Pig', 'Horse', 'Parrot', 'Pig', 'Rabbit', 'Sheep',
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Report an Adverse Reaction', item: SITE.url + '/report-adverse-reaction' },
+  ],
+};
+---
+<BaseLayout
+  title="Report an Adverse Reaction — FDA Form 1932a"
+  description="Report a veterinary adverse drug reaction for an F10® product (FDA Form 1932a). Complete the report online, or download the form and return it by email."
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
+
+  <!-- Page hero -->
+  <section class="dots-hero text-white">
+    <div class="section-inner py-16">
+      <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
+        <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span> Report an Adverse Reaction
+      </nav>
+      <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+        Report an adverse reaction
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90">
+        Veterinary Adverse Drug Reaction report (FDA Form 1932a), required under the FDA Emergency Use
+        Authorization for New World screwworm. Complete it online below, or download the form and return
+        it by email.
+      </p>
+    </div>
+  </section>
+
+  <!-- Options bar: download + FDA direct -->
+  <section class="bg-white">
+    <div class="section-inner py-10">
+      <div class="grid gap-6 md:grid-cols-2">
+        <div class="rounded-[var(--radius-card)] border border-border-grey bg-soft-grey p-6">
+          <h2 class="text-base font-extrabold text-charcoal">Prefer to download?</h2>
+          <p class="mt-2 text-sm text-medium-grey">
+            Download FDA Form 1932a, complete it, and email it to
+            <a href={`mailto:${SITE.email}`} class="font-semibold text-f10-blue hover:underline">{SITE.email}</a>.
+          </p>
+          <a href={PDF} target="_blank" rel="noopener"
+            class="mt-4 inline-block rounded-lg bg-f10-blue px-5 py-2.5 text-sm font-bold text-white transition hover:bg-f10-blue-deep">
+            Download the form (PDF) ↓
+          </a>
+        </div>
+        <div class="rounded-lg border border-f10-amber/40 bg-f10-amber/10 p-6 text-sm text-medium-grey">
+          <h2 class="text-base font-extrabold text-charcoal">Reporting to the FDA directly</h2>
+          <p class="mt-2">
+            You may also report an adverse event directly to the FDA using Form FDA 1932a at
+            <a href="https://www.fda.gov/reportanimalae" target="_blank" rel="noopener" class="font-semibold text-f10-blue hover:underline">fda.gov/reportanimalae</a>
+            or by phone on 1-888-FDA-VETS (1-888-332-8387).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Online form -->
+  <section class="dots-light">
+    <div class="section-inner py-12">
+      <h2 class="text-2xl font-extrabold">Complete the report online</h2>
+      <p class="mt-2 max-w-3xl text-sm text-medium-grey">
+        Fields follow FDA Form 1932a. Complete as much as you can — only your name and email are required
+        so we can acknowledge the report; the more detail you provide, the more useful the report.
+      </p>
+
+      {!formReady && (
+        <p class="mt-6 max-w-3xl rounded-lg border border-dashed border-border-grey bg-white p-4 text-sm italic text-medium-grey">
+          [Form setup pending — add the Formspree form ID (ADVERSE_FORM_ID) in <code>consts.ts</code> to
+          make online submission live. Meanwhile, please download the PDF above and email it to
+          <a href={`mailto:${SITE.email}`} class="font-semibold text-f10-blue not-italic hover:underline">{SITE.email}</a>.]
+        </p>
+      )}
+
+      <form
+        action={formAction}
+        method="POST"
+        class:list={['mt-8 space-y-10', !formReady && 'pointer-events-none opacity-50']}
+        aria-disabled={!formReady}
+      >
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="Veterinary Adverse Drug Reaction (FDA 1932a) — f10products.us" />
+
+        <!-- SENDER INFORMATION -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Sender information</legend>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {personFields.map((f) => (
+              <div>
+                <label class={labelCls} for={`sender_${f.key}`}>
+                  {f.label}{['first_name', 'last_name', 'email'].includes(f.key) && <span class="text-f10-red"> *</span>}
+                </label>
+                <input
+                  id={`sender_${f.key}`} name={`sender_${f.key}`} type={f.type ?? 'text'}
+                  required={['first_name', 'last_name', 'email'].includes(f.key)} class={inputCls}
+                />
+              </div>
+            ))}
+          </div>
+          <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            <fieldset>
+              <legend class="text-sm font-semibold text-charcoal">Sender Category</legend>
+              <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                {['Veterinarian', 'Animal Owner', 'Other'].map((o) => (
+                  <label class="flex items-center gap-2"><input type="radio" name="sender_category" value={o} /> {o}</label>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend class="text-sm font-semibold text-charcoal">Preferred Method of Contact</legend>
+              <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                {['Telephone', 'Email'].map((o) => (
+                  <label class="flex items-center gap-2"><input type="radio" name="preferred_contact" value={o} /> {o}</label>
+                ))}
+              </div>
+            </fieldset>
+          </div>
+          <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            <fieldset>
+              <legend class="text-sm font-semibold text-charcoal">Previously Reported to the Manufacturer?</legend>
+              <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                {['Yes', 'No'].map((o) => (
+                  <label class="flex items-center gap-2"><input type="radio" name="previously_reported" value={o} /> {o}</label>
+                ))}
+              </div>
+            </fieldset>
+            <div>
+              <label class={labelCls} for="manufacturer_case_number">If Yes, Manufacturer's Case Number</label>
+              <input id="manufacturer_case_number" name="manufacturer_case_number" type="text" class={inputCls} />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- HEALTH CARE PROFESSIONAL INFORMATION -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Health-care professional information</legend>
+          <p class="mt-2 text-xs text-medium-grey">If different from Sender information.</p>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {personFields.map((f) => (
+              <div>
+                <label class={labelCls} for={`hcp_${f.key}`}>{f.label}</label>
+                <input id={`hcp_${f.key}`} name={`hcp_${f.key}`} type={f.type ?? 'text'} class={inputCls} />
+              </div>
+            ))}
+          </div>
+        </fieldset>
+
+        <!-- OWNER INFORMATION -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Owner information</legend>
+          <p class="mt-2 text-xs text-medium-grey">If different from Sender information.</p>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {personFields.map((f) => (
+              <div>
+                <label class={labelCls} for={`owner_${f.key}`}>{f.label}</label>
+                <input id={`owner_${f.key}`} name={`owner_${f.key}`} type={f.type ?? 'text'} class={inputCls} />
+              </div>
+            ))}
+          </div>
+        </fieldset>
+
+        <!-- PRODUCT USE INFORMATION -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Product use information for suspected product</legend>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2">
+            <div class="sm:col-span-2">
+              <label class={labelCls} for="product_name">Name of Suspected Product</label>
+              <input id="product_name" name="product_name" type="text" class={inputCls} />
+            </div>
+            <div class="sm:col-span-2">
+              <label class={labelCls} for="reason_for_use">Diagnosis and/or Reason for Use of the Product</label>
+              <input id="reason_for_use" name="reason_for_use" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="dosage_form">Dosage Form (Liquid, topical, etc.)</label>
+              <input id="dosage_form" name="dosage_form" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="route">Route of Administration</label>
+              <input id="route" name="route" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="date_first_exposure">Date of First Exposure</label>
+              <input id="date_first_exposure" name="date_first_exposure" type="date" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="date_last_exposure">Date of Last Exposure</label>
+              <input id="date_last_exposure" name="date_last_exposure" type="date" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="duration_of_use">Duration of Product Use</label>
+              <input id="duration_of_use" name="duration_of_use" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="dose_administered">Dose Administered</label>
+              <input id="dose_administered" name="dose_administered" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="interval">Interval of Administration (Frequency)</label>
+              <input id="interval" name="interval" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="lot_number">Lot Number</label>
+              <input id="lot_number" name="lot_number" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="expiration_date">Expiration Date</label>
+              <input id="expiration_date" name="expiration_date" type="text" class={inputCls} />
+            </div>
+            <fieldset class="sm:col-span-2">
+              <legend class="text-sm font-semibold text-charcoal">Product Administered by</legend>
+              <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                {['Veterinarian/Staff', 'Owner', 'Other'].map((o) => (
+                  <label class="flex items-center gap-2"><input type="radio" name="administered_by" value={o} /> {o}</label>
+                ))}
+              </div>
+            </fieldset>
+          </div>
+        </fieldset>
+
+        <!-- ADVERSE EVENT INFORMATION -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Adverse event information</legend>
+          <div class="mt-4 space-y-5">
+            <fieldset>
+              <legend class="text-sm font-semibold text-charcoal">Level of Suspicion that Product Caused the Adverse Event</legend>
+              <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                {['High', 'Medium', 'Low', 'Unknown'].map((o) => (
+                  <label class="flex items-center gap-2"><input type="radio" name="level_of_suspicion" value={o} /> {o}</label>
+                ))}
+              </div>
+            </fieldset>
+            <div>
+              <label class={labelCls} for="treatment_of_event">Treatment of Adverse Event (Describe briefly)</label>
+              <textarea id="treatment_of_event" name="treatment_of_event" rows="2" class={inputCls}></textarea>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <fieldset>
+                <legend class="text-sm font-semibold text-charcoal">Did the Event Abate After Stopping the Product?</legend>
+                <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                  {['Yes', 'No', 'Not Applicable'].map((o) => (
+                    <label class="flex items-center gap-2"><input type="radio" name="event_abated" value={o} /> {o}</label>
+                  ))}
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend class="text-sm font-semibold text-charcoal">Did the Event Reappear After Reintroduction?</legend>
+                <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                  {['Yes', 'No', 'Not Applicable'].map((o) => (
+                    <label class="flex items-center gap-2"><input type="radio" name="event_reappeared" value={o} /> {o}</label>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+            <fieldset>
+              <legend class="text-sm font-semibold text-charcoal">Outcome</legend>
+              <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                {['Recovered', 'Died', 'Other'].map((o) => (
+                  <label class="flex items-center gap-2"><input type="radio" name="outcome" value={o} /> {o}</label>
+                ))}
+              </div>
+            </fieldset>
+          </div>
+        </fieldset>
+
+        <!-- SPECIES AND RELATED INFORMATION -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Species and related information</legend>
+          <fieldset class="mt-4">
+            <legend class="text-sm font-semibold text-charcoal">Species</legend>
+            <div class="mt-2 grid grid-cols-2 gap-2 text-sm text-charcoal sm:grid-cols-3 lg:grid-cols-4">
+              {speciesList.map((s) => (
+                <label class="flex items-center gap-2"><input type="checkbox" name="species" value={s} /> {s}</label>
+              ))}
+            </div>
+            <div class="mt-3 max-w-sm">
+              <label class={labelCls} for="species_other">Other (Specify)</label>
+              <input id="species_other" name="species_other" type="text" class={inputCls} />
+            </div>
+          </fieldset>
+          <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <label class={labelCls} for="breed">Breed</label>
+              <input id="breed" name="breed" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="age">Age</label>
+              <input id="age" name="age" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="weight">Weight</label>
+              <input id="weight" name="weight" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="gender">Gender</label>
+              <select id="gender" name="gender" class={inputCls}>
+                <option value="">—</option>
+                {['Male', 'Female', 'Male Neutered', 'Female Neutered'].map((o) => <option value={o}>{o}</option>)}
+              </select>
+            </div>
+          </div>
+          <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <fieldset class="lg:col-span-1">
+              <legend class="text-sm font-semibold text-charcoal">Overall Health Status When Product Given</legend>
+              <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+                {['Excellent', 'Good', 'Fair', 'Poor', 'Critical'].map((o) => (
+                  <label class="flex items-center gap-2"><input type="radio" name="health_status" value={o} /> {o}</label>
+                ))}
+              </div>
+            </fieldset>
+            <div>
+              <label class={labelCls} for="animals_treated">Number of Animals Treated</label>
+              <input id="animals_treated" name="animals_treated" type="number" min="0" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="animals_affected">Number of Animals Affected</label>
+              <input id="animals_affected" name="animals_affected" type="number" min="0" class={inputCls} />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ADVERSE EVENT OCCURRENCE -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Adverse event occurrence</legend>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div>
+              <label class={labelCls} for="date_of_onset">Date of Onset of Adverse Event</label>
+              <input id="date_of_onset" name="date_of_onset" type="date" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="time_first_to_onset">Time: First Exposure → Onset</label>
+              <input id="time_first_to_onset" name="time_first_to_onset" type="text" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="time_last_to_onset">Time: Last Administration → Onset</label>
+              <input id="time_last_to_onset" name="time_last_to_onset" type="text" class={inputCls} />
+            </div>
+          </div>
+          <fieldset class="mt-5">
+            <legend class="text-sm font-semibold text-charcoal">When the Event Occurred, Treatment with the Suspected Product:</legend>
+            <div class="mt-2 flex flex-col gap-2 text-sm text-charcoal">
+              {[
+                'Had already been completed',
+                'Was discontinued',
+                'Was discontinued and replaced with another product',
+                'Was discontinued and reintroduced later',
+                'Was continued at an altered dose',
+                'Other',
+              ].map((o) => (
+                <label class="flex items-center gap-2"><input type="radio" name="treatment_when_event" value={o} /> {o}</label>
+              ))}
+            </div>
+          </fieldset>
+        </fieldset>
+
+        <!-- CONCURRENT CLINICAL PROBLEMS -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Concurrent clinical problem(s)</legend>
+          <fieldset class="mt-4">
+            <legend class="text-sm font-semibold text-charcoal">Were there concurrent clinical problems?</legend>
+            <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+              {['Yes', 'No', 'Do not know', 'None'].map((o) => (
+                <label class="flex items-center gap-2"><input type="radio" name="concurrent_problems" value={o} /> {o}</label>
+              ))}
+            </div>
+          </fieldset>
+          <div class="mt-4">
+            <label class={labelCls} for="concurrent_problems_list">List concurrent clinical problem(s)</label>
+            <textarea id="concurrent_problems_list" name="concurrent_problems_list" rows="2" class={inputCls}></textarea>
+          </div>
+        </fieldset>
+
+        <!-- CONCURRENT PRODUCT INFORMATION -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Concurrent product information</legend>
+          <p class="mt-2 text-xs text-medium-grey">Excluding treatment of the current event.</p>
+          <fieldset class="mt-4">
+            <legend class="text-sm font-semibold text-charcoal">Were concurrent products administered?</legend>
+            <div class="mt-2 flex flex-wrap gap-4 text-sm text-charcoal">
+              {['Yes', 'No', 'Do not know', 'None'].map((o) => (
+                <label class="flex items-center gap-2"><input type="radio" name="concurrent_products" value={o} /> {o}</label>
+              ))}
+            </div>
+          </fieldset>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2">
+            <div class="sm:col-span-2">
+              <label class={labelCls} for="concurrent_products_names">Names of Concurrent Products Administered</label>
+              <textarea id="concurrent_products_names" name="concurrent_products_names" rows="2" class={inputCls}></textarea>
+            </div>
+            <div>
+              <label class={labelCls} for="concurrent_first_exposure">Date of First Exposure</label>
+              <input id="concurrent_first_exposure" name="concurrent_first_exposure" type="date" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="concurrent_last_exposure">Date of Last Exposure</label>
+              <input id="concurrent_last_exposure" name="concurrent_last_exposure" type="date" class={inputCls} />
+            </div>
+            <div>
+              <label class={labelCls} for="concurrent_duration">Duration of Product Use</label>
+              <input id="concurrent_duration" name="concurrent_duration" type="text" class={inputCls} />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- LONG NARRATIVE -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Adverse event / product problem / use error — narrative</legend>
+          <div class="mt-4">
+            <label class={labelCls} for="narrative">Describe the Adverse Event / Product Problem / Event Use Error</label>
+            <textarea id="narrative" name="narrative" rows="8" class={inputCls}></textarea>
+          </div>
+        </fieldset>
+
+        <!-- DOCUMENT INFORMATION -->
+        <fieldset class="rounded-[var(--radius-card)] border border-border-grey bg-white p-6">
+          <legend class={legendCls}>Document information</legend>
+          <p class="mt-2 text-xs text-medium-grey">
+            Reference any supporting documents by name and description. To attach the files themselves,
+            email them to <a href={`mailto:${SITE.email}`} class="font-semibold text-f10-blue hover:underline">{SITE.email}</a> quoting your name.
+          </p>
+          <div class="mt-4 space-y-3">
+            {[1, 2, 3].map((n) => (
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label class={labelCls} for={`doc_name_${n}`}>Attached Document Name (Filename if Electronic)</label>
+                  <input id={`doc_name_${n}`} name={`doc_name_${n}`} type="text" class={inputCls} />
+                </div>
+                <div>
+                  <label class={labelCls} for={`doc_desc_${n}`}>Attached Document Description</label>
+                  <input id={`doc_desc_${n}`} name={`doc_desc_${n}`} type="text" class={inputCls} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" disabled={!formReady}
+            class="rounded-lg bg-f10-red px-6 py-3 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60">
+            Submit report
+          </button>
+          <a href={PDF} target="_blank" rel="noopener" class="text-sm font-semibold text-f10-blue hover:underline">
+            or download the PDF instead ↓
+          </a>
+        </div>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

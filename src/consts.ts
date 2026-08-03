@@ -30,6 +30,13 @@ export const NAV = [
 // dead form. [CONFIRM: Formspree form ID]
 export const CONTACT_FORM_ID = '';
 
+// Formspree form ID for the Veterinary Adverse Drug Reaction report (FDA 1932a).
+// Keep this SEPARATE from the general contact form. Submissions must reach the
+// manufacturer's pharmacovigilance mailbox per the FDA EUA requirement.
+// [CONFIRM: Formspree form ID + recipient — and .com vs .us mailbox
+// (the FDA-authorized form cites info@f10products.com).]
+export const ADVERSE_FORM_ID = '';
+
 // Resources sub-navigation (dropdown under Resources, mirrors the Products pattern).
 // Only Efficacy & Safety is live now; further sections (SITE_PLAN.md #7) slot in later.
 export const RESOURCES_NAV = [
