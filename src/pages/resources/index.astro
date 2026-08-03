@@ -16,7 +16,6 @@ const liveSections = [
 ];
 
 const comingSoon = [
-  'Usage guidelines',
   'Knowledge articles',
   'Videos',
 ];
@@ -57,7 +56,7 @@ const jsonLd = {
   <!-- Live sections -->
   <section class="bg-white">
     <div class="section-inner py-16">
-      <div class="grid gap-6 md:grid-cols-2">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {liveSections.map((s) => (
           <a
             href={s.href}
