@@ -5,9 +5,11 @@ import { SITE } from '../../consts';
 import { productsInCategory } from '../../data/products';
 
 // DISINFECTANTS category. Structure-first: factual/organisational copy only.
-// No efficacy, spectrum, kill, or dilution claims, and no US registration
-// number until Amanda supplies it (EPA product status pending) —
-// REGULATORY_GUARDRAILS.md. SDS links are factual safety documents.
+// No efficacy, spectrum, kill, or dilution claims — REGULATORY_GUARDRAILS.md.
+// EPA status CONFIRMED (Amanda 2026-08-03): the range is EPA-registered with
+// EPA-approved labels (Establishment No. 79755zaf001; product Reg. Nos. 79755-4
+// F10CL, -5 F10 RTU, -6 F10SC, -8 F10SCXD — verbatim from the EPA approval docs).
+// SDS links are factual safety documents.
 
 const items = productsInCategory('disinfectants');
 
@@ -61,12 +63,10 @@ const jsonLd = [
   <section class="bg-white">
     <div class="section-inner py-16">
       <h2 class="text-3xl font-extrabold">The disinfectant range</h2>
-      <!-- US registration wording is supplied by Amanda, verbatim, when confirmed. -->
-      <p class="mt-2 max-w-2xl rounded-lg border border-dashed border-border-grey bg-soft-grey p-4 text-sm italic text-medium-grey">
-        [CONFIRM: US registration status + wording for the disinfectant range (EPA product status pending)]
-      </p>
-      <p class="mt-3 max-w-2xl text-sm text-charcoal">
-        F10®'s EPA-registered disinfectants are registered for sale in 49 US states — every state except Hawaii.
+      <p class="mt-2 max-w-2xl text-sm text-charcoal">
+        The F10® veterinary disinfectant range is registered with the U.S. EPA under EPA-approved
+        product labels (EPA Establishment No. 79755zaf001), and is registered for sale in 49 US
+        states — every state except Hawaii.
       </p>
       <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((p) => <ProductCard product={p} />)}
