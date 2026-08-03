@@ -3,13 +3,15 @@
 // blue banner, 3 columns (company left · logo plate centre · contact + Regional
 // Sites right), then a nav row with centred links + a compact search field.
 // Wholesale business → no "Buy now". US site → US is current, dropdown lists other regions.
-import { NAV, REGIONS, SITE } from '../consts';
+import { NAV, RESOURCES_NAV, REGIONS, SITE } from '../consts';
 import { categories } from '../data/products';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 // Products is active for the hub, the category pages, and the /product/[slug] pages.
 const productsActive = path.startsWith('/products') || path.startsWith('/product/');
+// Resources is active for the hub and all its sub-pages.
+const resourcesActive = path.startsWith('/resources');
 ---
 <header class="dots-blue text-white">
   <!-- Top banner: 3 columns -->
@@ -71,6 +73,25 @@ const productsActive = path.startsWith('/products') || path.startsWith('/product
               <li><a href="/products" class="block border-b border-border-grey px-4 py-2 text-sm font-bold hover:bg-soft-grey">All Products</a></li>
               {categories.map((c) => (
                 <li><a href={c.href} class="block px-4 py-2 text-sm hover:bg-soft-grey">{c.label}</a></li>
+              ))}
+            </ul>
+          </details>
+        ) : item.href === '/resources' ? (
+          <details class="group relative">
+            <summary
+              class:list={[
+                'flex cursor-pointer list-none items-center gap-1 rounded px-3 py-1.5 text-sm font-semibold text-white transition-colors',
+                'border-b-2 border-transparent hover:border-f10-red',
+                resourcesActive && 'border-f10-red',
+              ]}
+            >
+              Resources
+              <span class="text-xs transition-transform group-open:rotate-180" aria-hidden="true">▾</span>
+            </summary>
+            <ul class="absolute left-1/2 z-30 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-lg bg-white text-charcoal shadow-lg ring-1 ring-border-grey">
+              <li><a href="/resources" class="block border-b border-border-grey px-4 py-2 text-sm font-bold hover:bg-soft-grey">All Resources</a></li>
+              {RESOURCES_NAV.map((r) => (
+                <li><a href={r.href} class="block px-4 py-2 text-sm hover:bg-soft-grey">{r.label}</a></li>
               ))}
             </ul>
           </details>

@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE, RESOURCES_NAV } from '../../consts';
+
+// RESOURCES HUB (SITE_PLAN.md #7 — Knowledge / Resources).
+// Thin hub for now: Efficacy & Safety is the only live section. Future sections
+// (guidelines, articles, videos) are shown as "coming soon" so the structure and
+// nav don't need rebuilding when they land. No regulatory claims on this page.
+
+const liveSections = [
+  {
+    label: 'Efficacy & Safety',
+    href: '/resources/efficacy-safety',
+    blurb: 'Independent laboratory reports, published in full — starting with the insecticidal test reports for the F10® products with insecticide.',
+  },
+];
+
+const comingSoon = [
+  'Usage guidelines',
+  'Knowledge articles',
+  'Videos',
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Resources', item: SITE.url + '/resources' },
+  ],
+};
+---
+<BaseLayout
+  title="Resources"
+  description="F10® US resources — independent efficacy and safety reports, guidelines and knowledge articles for veterinary and biosecurity professionals."
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
+
+  <!-- Page hero -->
+  <section class="dots-hero text-white">
+    <div class="section-inner py-16">
+      <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
+        <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span> Resources
+      </nav>
+      <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+        Resources
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90">
+        Evidence, guidance and reference material for professionals evaluating F10®. Documents are
+        published in full and unaltered — read each for its own methods, scope and findings.
+      </p>
+    </div>
+  </section>
+
+  <!-- Live sections -->
+  <section class="bg-white">
+    <div class="section-inner py-16">
+      <div class="grid gap-6 md:grid-cols-2">
+        {liveSections.map((s) => (
+          <a
+            href={s.href}
+            class="group flex flex-col rounded-[var(--radius-card)] border border-border-grey bg-white p-6 transition hover:-translate-y-0.5 hover:border-f10-blue hover:shadow-md"
+          >
+            <h2 class="text-xl font-extrabold leading-tight text-charcoal">{s.label}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-medium-grey">{s.blurb}</p>
+            <span class="mt-4 text-sm font-semibold text-f10-red group-hover:underline">Open section →</span>
+          </a>
+        ))}
+
+        {comingSoon.map((label) => (
+          <div class="flex flex-col rounded-[var(--radius-card)] border border-dashed border-border-grey bg-soft-grey p-6">
+            <h2 class="text-xl font-extrabold leading-tight text-charcoal/70">{label}</h2>
+            <span class="mt-auto pt-4 text-xs font-semibold uppercase tracking-wider text-medium-grey">Coming soon</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Distributor CTA -->
+  <section class="dots-blue text-white">
+    <div class="section-inner flex flex-col items-center gap-4 py-14 text-center">
+      <h2 class="text-3xl font-extrabold text-white">Ready to source F10®?</h2>
+      <p class="max-w-xl text-white/90">F10® is supplied through authorized US distributors.</p>
+      <a href="/distributors" class="rounded-lg bg-white px-6 py-3 text-sm font-bold text-f10-blue transition hover:bg-light-blue">
+        Find a distributor
+      </a>
+    </div>
+  </section>
+</BaseLayout>

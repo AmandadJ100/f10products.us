@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../consts';
+
+// RESOURCES → EFFICACY & SAFETY (SITE_PLAN.md #7).
+// Only the Insecticidal Reports are loaded for now (Amanda, 2026-08-03).
+//
+// REGULATORY_GUARDRAILS.md governs this page:
+//  - Documents are published in full and unaltered; each card links the source PDF.
+//  - NO authored efficacy claims. Card titles are the reports' own study titles.
+//    Body copy only describes what the documents ARE and directs the reader to them.
+//  - These studies relate to the two F10® products that contain an insecticide
+//    (Wound Spray WI, Barrier Ointment WI). The MRL/beef-milk report ties to the
+//    EUA authorisation (which covers cattle/horses); the others are insecticidal
+//    efficacy/stability studies. We do not summarise their findings.
+const DOC = '/documents/insecticidal-reports';
+
+const reports = [
+  {
+    tag: 'Biological efficacy',
+    title: 'Determination of the biological efficacy of F10® Wound Spray with Insecticide and F10® Antiseptic Barrier Ointment with Insecticide against Lucilia species (blowfly)',
+    href: `${DOC}/biological-efficacy-wi-products-vs-lucilia-blowfly.pdf`,
+  },
+  {
+    tag: 'In vitro',
+    title: 'In vitro study to determine the efficacy of F10® Wound Spray with Insecticide and F10® Antiseptic Barrier Ointment with Insecticide to control Lucilia cuprina larvae',
+    href: `${DOC}/in-vitro-efficacy-wi-products-lucilia-cuprina-larvae.pdf`,
+  },
+  {
+    tag: 'Species range',
+    title: 'Effectiveness of F10® Wound Spray with Insecticide to control species of blow fly other than L. cuprina',
+    href: `${DOC}/wound-spray-wi-blowfly-other-than-l-cuprina.pdf`,
+  },
+  {
+    tag: 'Stability · in vitro',
+    title: 'In vitro study to test for possible deterioration of the effectiveness of F10® Germicidal Wound Spray to control Lucilia cuprina larvae',
+    href: `${DOC}/deterioration-test-wound-spray-lucilia-cuprina-larvae.pdf`,
+  },
+  {
+    tag: 'Stability · in vitro',
+    title: 'An in vitro study to test for possible deterioration of the effectiveness of F10® Germicidal Wound Spray to control Lucilia cuprina eggs',
+    href: `${DOC}/deterioration-test-wound-spray-lucilia-cuprina-eggs.pdf`,
+  },
+  {
+    tag: 'Residue · MRL',
+    title: 'F10® Antiseptic Wound Spray with Insecticide — residue (MRL) compliance for beef and milk on open wounds',
+    href: `${DOC}/wound-spray-wi-mrl-residue-beef-milk.pdf`,
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Resources', item: SITE.url + '/resources' },
+    { '@type': 'ListItem', position: 3, name: 'Efficacy & Safety', item: SITE.url + '/resources/efficacy-safety' },
+  ],
+};
+---
+<BaseLayout
+  title="Efficacy & Safety — Insecticidal Reports"
+  description="Independent laboratory insecticidal test reports for the F10® products with insecticide — published in full and unaltered. Read each report for its methods, scope and findings."
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
+
+  <!-- Page hero -->
+  <section class="dots-hero text-white">
+    <div class="section-inner py-16">
+      <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
+        <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span>
+        <a href="/resources" class="hover:underline">Resources</a> <span aria-hidden="true">/</span> Efficacy &amp; Safety
+      </nav>
+      <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
+        Efficacy &amp; safety
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90">
+        Independent laboratory reports, published in full and unaltered. Read each document for its own
+        methods, scope, conditions and findings.
+      </p>
+    </div>
+  </section>
+
+  <!-- Insecticidal Reports -->
+  <section id="insecticidal-reports" class="bg-white scroll-mt-8">
+    <div class="section-inner py-16">
+      <div class="max-w-3xl">
+        <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
+          Insecticidal Reports
+        </span>
+        <h2 class="mt-3 text-3xl font-extrabold">Insecticidal test reports</h2>
+        <p class="mt-3 text-charcoal">
+          The reports below are independent laboratory studies relating to the two F10® products that
+          contain an insecticide —
+          <a href="/product/antiseptic-wound-spray-wi" class="font-semibold text-f10-blue hover:underline">F10® Antiseptic Wound Spray with Insecticide</a>
+          and
+          <a href="/product/antiseptic-barrier-ointment-wi" class="font-semibold text-f10-blue hover:underline">F10® Antiseptic Barrier Ointment with Insecticide</a>.
+          Each is published in full; read the document itself for its methods, scope and findings.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {reports.map((r) => (
+          <div class="flex flex-col rounded-[var(--radius-card)] border border-border-grey bg-white p-6 transition hover:-translate-y-0.5 hover:border-f10-blue hover:shadow-md">
+            <span class="inline-block w-fit rounded-full bg-soft-grey px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-medium-grey">{r.tag}</span>
+            <h3 class="mt-3 text-base font-extrabold leading-snug text-charcoal">{r.title}</h3>
+            <a href={r.href} target="_blank" rel="noopener" class="mt-auto pt-4 text-sm font-semibold text-f10-red hover:underline">
+              View report (PDF) →
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-8 max-w-3xl text-sm text-medium-grey">
+        For the F10® US regulatory documents — FDA Emergency Use Authorizations and FDA Index (Minor
+        Species) listings — see
+        <a href="/credentials" class="font-semibold text-f10-blue hover:underline">Credentials &amp; compliance</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Distributor CTA -->
+  <section class="dots-blue text-white">
+    <div class="section-inner flex flex-col items-center gap-4 py-14 text-center">
+      <h2 class="text-3xl font-extrabold text-white">Ready to source F10®?</h2>
+      <p class="max-w-xl text-white/90">F10® is supplied through authorized US distributors.</p>
+      <a href="/distributors" class="rounded-lg bg-white px-6 py-3 text-sm font-bold text-f10-blue transition hover:bg-light-blue">
+        Find a distributor
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -23,6 +23,12 @@ export const NAV = [
   { label: 'Contact', href: '/contact' },
 ] as const;
 
+// Resources sub-navigation (dropdown under Resources, mirrors the Products pattern).
+// Only Efficacy & Safety is live now; further sections (SITE_PLAN.md #7) slot in later.
+export const RESOURCES_NAV = [
+  { label: 'Efficacy & Safety', href: '/resources/efficacy-safety' },
+] as const;
+
 // Regional sites — on the US site, "United States" IS the current site,
 // so the dropdown lists the other regions (DESIGN.md header note).
 // [CONFIRM: exact regional URLs before wiring live.]
