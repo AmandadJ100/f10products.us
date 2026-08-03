@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -15,5 +15,8 @@
     "@tailwindcss/vite": "^4",
     "astro": "^5",
     "tailwindcss": "^4"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
   }
 }
