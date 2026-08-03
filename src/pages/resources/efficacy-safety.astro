@@ -14,6 +14,19 @@ import { SITE } from '../../consts';
 //    EUA authorisation (which covers cattle/horses); the others are insecticidal
 //    efficacy/stability studies. We do not summarise their findings.
 const DOC = '/documents/insecticidal-reports';
+const TOX = '/documents/toxicity-tests';
+
+// Toxicity Tests — six individual GLP endpoint reports (Amanda split from the
+// combined report, 2026-08-03). Ordered by OPPTS Series 870 number. Content of
+// each PDF verified to match its endpoint before wiring.
+const toxicityReports = [
+  { code: 'OPPTS 870.1100', title: 'Acute Oral Toxicity',      href: `${TOX}/f10-acute-oral-toxicity.pdf` },
+  { code: 'OPPTS 870.1200', title: 'Acute Dermal Toxicity',    href: `${TOX}/f10-acute-dermal-toxicity.pdf` },
+  { code: 'OPPTS 870.1300', title: 'Acute Inhalation Toxicity', href: `${TOX}/f10-acute-inhalation-toxicity.pdf` },
+  { code: 'OPPTS 870.2400', title: 'Acute Eye Irritation',     href: `${TOX}/f10-acute-eye-irritation.pdf` },
+  { code: 'OPPTS 870.2500', title: 'Acute Dermal Irritation',  href: `${TOX}/f10-acute-dermal-irritation.pdf` },
+  { code: 'OPPTS 870.2600', title: 'Skin Sensitisation',       href: `${TOX}/f10-skin-sensitisation.pdf` },
+];
 
 const reports = [
   {
@@ -135,13 +148,15 @@ const jsonLd = {
       </div>
 
       <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div class="flex flex-col rounded-[var(--radius-card)] border border-border-grey bg-white p-6 transition hover:-translate-y-0.5 hover:border-f10-blue hover:shadow-md">
-          <span class="inline-block w-fit rounded-full bg-soft-grey px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-medium-grey">GLP · OPPTS 870</span>
-          <h3 class="mt-3 text-base font-extrabold leading-snug text-charcoal">F10® product-specific GLP toxicity report</h3>
-          <a href="/documents/toxicity-tests/f10-glp-toxicity-report.pdf" target="_blank" rel="noopener" class="mt-auto pt-4 text-sm font-semibold text-f10-red hover:underline">
-            View report (PDF) →
-          </a>
-        </div>
+        {toxicityReports.map((r) => (
+          <div class="flex flex-col rounded-[var(--radius-card)] border border-border-grey bg-white p-6 transition hover:-translate-y-0.5 hover:border-f10-blue hover:shadow-md">
+            <span class="inline-block w-fit rounded-full bg-soft-grey px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-medium-grey">{r.code}</span>
+            <h3 class="mt-3 text-base font-extrabold leading-snug text-charcoal">{r.title}</h3>
+            <a href={r.href} target="_blank" rel="noopener" class="mt-auto pt-4 text-sm font-semibold text-f10-red hover:underline">
+              View report (PDF) →
+            </a>
+          </div>
+        ))}
       </div>
     </div>
   </section>
