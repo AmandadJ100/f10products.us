@@ -232,12 +232,12 @@ const jsonLd = [
               <Image
                 src={l.photo}
                 alt={`${l.name}, ${l.title}, F10®`}
-                width={160}
-                height={160}
-                class="h-20 w-20 rounded-full object-cover"
+                width={224}
+                height={224}
+                class="h-28 w-28 rounded-full object-cover"
               />
             ) : (
-              <div class="flex h-20 w-20 items-center justify-center rounded-full bg-f10-blue text-xl font-black text-white" aria-hidden="true">
+              <div class="flex h-28 w-28 items-center justify-center rounded-full bg-f10-blue text-2xl font-black text-white" aria-hidden="true">
                 {initials(l.name)}
               </div>
             )}
