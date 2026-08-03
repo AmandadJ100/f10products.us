@@ -1,6 +1,14 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../consts';
+
+// About imagery (Amanda-supplied, 2026-08-03). Optimised by astro:assets → webp.
+import facilityImg from '../assets/about/facility.png';
+import teamImg from '../assets/about/team.jpg';
+import leaderJohn from '../assets/about/leader-john-temperley.png';
+import leaderIan from '../assets/about/leader-ian-temperley.png';
+import leaderLinda from '../assets/about/leader-linda-muller.png';
 
 // ABOUT — adapted from the SA staging About page, US-framed (SITE_PLAN.md #8).
 // Corporate facts (founding, facility, product/country counts, leadership) are
@@ -28,12 +36,13 @@ const usCredentials = [
   'ISO 9001:2015',
 ];
 
-// Leadership — names/titles are corporate fact; photos are placeholders (Amanda 2026-07-31).
+// Leadership — names/titles are corporate fact. Photos supplied by Amanda
+// (2026-08-03); Phillip Human's photo is still pending → falls back to initials.
 const leaders = [
-  { name: 'John Temperley', title: 'Founder & Chairman' },
-  { name: 'Ian Temperley', title: 'Managing Director' },
-  { name: 'Phillip Human', title: 'General Manager' },
-  { name: 'Linda Muller', title: 'Technical Advisor' },
+  { name: 'John Temperley', title: 'Founder & Chairman', photo: leaderJohn },
+  { name: 'Ian Temperley', title: 'Managing Director', photo: leaderIan },
+  { name: 'Phillip Human', title: 'General Manager', photo: null },
+  { name: 'Linda Muller', title: 'Technical Advisor', photo: leaderLinda },
 ];
 const initials = (n: string) => n.split(' ').map((w) => w[0]).join('').slice(0, 2);
 
@@ -123,10 +132,13 @@ const jsonLd = [
           </p>
         </div>
       </div>
-      <!-- [CONTENT SLOT: manufacturing facility photo — supplied image pending] -->
-      <div class="flex h-64 items-center justify-center rounded-[var(--radius-card)] border border-dashed border-border-grey bg-soft-grey text-sm italic text-medium-grey md:h-80">
-        [Image: GMP-licensed manufacturing facility, {address.city}]
-      </div>
+      <Image
+        src={facilityImg}
+        alt={`F10® GMP-licensed manufacturing facility in ${address.city}, South Africa`}
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        class="h-64 w-full rounded-[var(--radius-card)] border border-border-grey object-cover md:h-80"
+      />
     </div>
   </section>
 
@@ -189,10 +201,13 @@ const jsonLd = [
   <!-- Our People -->
   <section class="dots-light">
     <div class="section-inner grid gap-10 py-16 md:grid-cols-2 md:items-center">
-      <!-- [CONTENT SLOT: team photo — supplied image pending] -->
-      <div class="order-2 flex h-64 items-center justify-center rounded-[var(--radius-card)] border border-dashed border-border-grey bg-white text-sm italic text-medium-grey md:order-1 md:h-72">
-        [Image: F10® team]
-      </div>
+      <Image
+        src={teamImg}
+        alt="The F10® team at Health and Hygiene (Pty) Ltd"
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        class="order-2 h-64 w-full rounded-[var(--radius-card)] border border-border-grey object-cover md:order-1 md:h-72"
+      />
       <div class="order-1 max-w-xl md:order-2">
         <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
           Our people
@@ -213,10 +228,19 @@ const jsonLd = [
       <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {leaders.map((l) => (
           <div class="flex flex-col items-center rounded-[var(--radius-card)] border border-border-grey bg-white p-6 text-center">
-            <!-- [Placeholder avatar — supplied leadership photo pending] -->
-            <div class="flex h-20 w-20 items-center justify-center rounded-full bg-f10-blue text-xl font-black text-white" aria-hidden="true">
-              {initials(l.name)}
-            </div>
+            {l.photo ? (
+              <Image
+                src={l.photo}
+                alt={`${l.name}, ${l.title}, F10®`}
+                width={160}
+                height={160}
+                class="h-20 w-20 rounded-full object-cover"
+              />
+            ) : (
+              <div class="flex h-20 w-20 items-center justify-center rounded-full bg-f10-blue text-xl font-black text-white" aria-hidden="true">
+                {initials(l.name)}
+              </div>
+            )}
             <h3 class="mt-4 text-base font-extrabold leading-tight text-charcoal">{l.name}</h3>
             <p class="mt-1 text-sm text-medium-grey">{l.title}</p>
           </div>
