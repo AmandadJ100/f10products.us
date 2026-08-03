@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/Card.astro';
+import AdverseReactionNotice from '../components/AdverseReactionNotice.astro';
 import { SITE } from '../consts';
 import { categories, productsInCategory } from '../data/products';
 
@@ -153,6 +154,9 @@ const audiences = [
         products other than as directed in the FDA Fact Sheet. The EUA documents are published in full and
         unaltered — read each Fact Sheet for authorized use, conditions, and limitations.</p>
       </div>
+
+      <!-- Adverse-reaction reporting (most relevant to the EUA products) -->
+      <AdverseReactionNotice class="mt-6" />
     </div>
   </section>
 

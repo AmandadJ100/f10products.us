@@ -1,0 +1,33 @@
+---
+// Prominent link to the adverse-reaction (FDA 1932a) reporting page. Placed on
+// Home, Products hub and the FDA EUA Products page (Amanda 2026-08-03) — the
+// footer link is easy to miss, and adverse reporting matters most for the EUA
+// products. Regulatory: this only links the reporting page; it authors nothing.
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<div
+  class:list={[
+    'flex flex-col gap-4 rounded-[var(--radius-card)] border border-f10-amber/50 bg-f10-amber/10 p-6 sm:flex-row sm:items-center sm:justify-between',
+    className,
+  ]}
+>
+  <div class="flex items-start gap-3">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         class="mt-0.5 shrink-0 text-f10-amber" aria-hidden="true">
+      <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" stroke-linejoin="round" />
+      <path d="M12 9v4" stroke-linecap="round" /><path d="M12 17h.01" stroke-linecap="round" />
+    </svg>
+    <div>
+      <p class="text-base font-extrabold text-charcoal">Report an adverse reaction</p>
+      <p class="mt-1 text-sm text-medium-grey">
+        Seen an adverse reaction in an animal treated with an F10® product? Please report it — you can
+        complete the FDA 1932a report online in a few minutes.
+      </p>
+    </div>
+  </div>
+  <a href="/report-adverse-reaction"
+     class="shrink-0 whitespace-nowrap rounded-lg bg-f10-red px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90">
+    Report a reaction →
+  </a>
+</div>

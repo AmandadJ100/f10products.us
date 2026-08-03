@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Card from '../../components/Card.astro';
+import AdverseReactionNotice from '../../components/AdverseReactionNotice.astro';
 import { SITE } from '../../consts';
 import { categories, productsInCategory } from '../../data/products';
 
@@ -89,6 +90,13 @@ const jsonLd = {
           ))}
         </ul>
       </div>
+    </div>
+  </section>
+
+  <!-- Adverse-reaction reporting -->
+  <section class="bg-white">
+    <div class="section-inner pb-4">
+      <AdverseReactionNotice />
     </div>
   </section>
 

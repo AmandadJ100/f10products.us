@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import AdverseReactionNotice from '../../components/AdverseReactionNotice.astro';
 import { SITE } from '../../consts';
 import { productsInCategory } from '../../data/products';
 
@@ -98,6 +99,9 @@ const jsonLd = [
         for the duration of the emergency declaration, unless revoked sooner. Read each Fact Sheet for the
         authorized animals, use, conditions, and limitations.</p>
       </div>
+
+      <!-- Adverse-reaction reporting (most relevant to the EUA products) -->
+      <AdverseReactionNotice class="mt-6" />
 
       <!-- Cross-pathway pointer (different, narrower species under the FDA Index) -->
       <p class="mt-6 max-w-3xl rounded-lg border border-border-grey bg-soft-grey p-4 text-sm text-medium-grey">
