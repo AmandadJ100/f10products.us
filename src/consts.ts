@@ -23,6 +23,13 @@ export const NAV = [
   { label: 'Contact', href: '/contact' },
 ] as const;
 
+// Contact form backend (Formspree — host-agnostic, chosen 2026-08-03).
+// Paste the Formspree form ID here (the part after /f/ in your endpoint) and the
+// contact form goes live, routing submissions to info@f10products.us.
+// While empty, the Contact page shows a "form setup pending" note instead of a
+// dead form. [CONFIRM: Formspree form ID]
+export const CONTACT_FORM_ID = '';
+
 // Resources sub-navigation (dropdown under Resources, mirrors the Products pattern).
 // Only Efficacy & Safety is live now; further sections (SITE_PLAN.md #7) slot in later.
 export const RESOURCES_NAV = [
