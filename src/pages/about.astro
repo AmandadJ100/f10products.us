@@ -9,6 +9,7 @@ import teamImg from '../assets/about/team.jpg';
 import leaderJohn from '../assets/about/leader-john-temperley.png';
 import leaderIan from '../assets/about/leader-ian-temperley.png';
 import leaderLinda from '../assets/about/leader-linda-muller.png';
+import leaderPhillip from '../assets/about/leader-phillip-human.png';
 
 // ABOUT — adapted from the SA staging About page, US-framed (SITE_PLAN.md #8).
 // Corporate facts (founding, facility, product/country counts, leadership) are
@@ -37,11 +38,11 @@ const usCredentials = [
 ];
 
 // Leadership — names/titles are corporate fact. Photos supplied by Amanda
-// (2026-08-03); Phillip Human's photo is still pending → falls back to initials.
+// (John/Ian/Linda 2026-08-03; Phillip Human added 2026-08-04).
 const leaders = [
   { name: 'John Temperley', title: 'Founder & Chairman', photo: leaderJohn },
   { name: 'Ian Temperley', title: 'Managing Director', photo: leaderIan },
-  { name: 'Phillip Human', title: 'General Manager', photo: null },
+  { name: 'Phillip Human', title: 'General Manager', photo: leaderPhillip },
   { name: 'Linda Muller', title: 'Technical Advisor', photo: leaderLinda },
 ];
 const initials = (n: string) => n.split(' ').map((w) => w[0]).join('').slice(0, 2);
