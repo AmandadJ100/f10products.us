@@ -28,14 +28,14 @@ export const NAV = [
 // contact form goes live, routing submissions to info@f10products.com.
 // While empty, the Contact page shows a "form setup pending" note instead of a
 // dead form. [CONFIRM: Formspree form ID]
-export const CONTACT_FORM_ID = '';
+export const CONTACT_FORM_ID = 'mqpzzqro';
 
 // Formspree form ID for the Veterinary Adverse Drug Reaction report (FDA 1932a).
 // Keep this SEPARATE from the general contact form. Submissions must reach the
 // manufacturer's pharmacovigilance mailbox per the FDA EUA requirement.
 // [CONFIRM: Formspree form ID + recipient. Mailbox is info@f10products.com
 // (matches the FDA-authorized form and the .com domain decision, 2026-08-04).]
-export const ADVERSE_FORM_ID = '';
+export const ADVERSE_FORM_ID = 'xrpzzlkz';
 
 // Resources sub-navigation (dropdown under Resources, mirrors the Products pattern).
 // Only Efficacy & Safety is live now; further sections (SITE_PLAN.md #7) slot in later.
