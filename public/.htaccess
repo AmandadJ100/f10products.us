@@ -1,0 +1,13 @@
+# Apache config for Xneelo shared hosting. Shipped from public/ into the web root.
+
+RewriteEngine On
+
+# --- Permanent EUA product-label QR redirects -------------------------------
+# QR codes are printed on physical bottles and can NEVER change. The old
+# WordPress site served the combined Fact Sheet + FOI at /download/<id>/.
+# These paths must resolve forever. Do not remove or renumber.
+#   6867 = F10 Antiseptic Wound Spray WI     (EUA 006672)  — decoded 2026-08-04
+#   6870 = F10 Antiseptic Barrier Ointment WI (EUA 006677) — decoded 2026-08-04
+# QSD drops the legacy ?tmstv= cache-buster the printed QR appends.
+RewriteRule ^download/6867/?$ /documents/f10-wound-spray-wi-eua-fact-sheet-foi-combined.pdf [R=301,L,QSD]
+RewriteRule ^download/6870/?$ /documents/f10-barrier-ointment-wi-eua-fact-sheet-foi-combined.pdf [R=301,L,QSD]
