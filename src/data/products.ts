@@ -324,7 +324,7 @@ export interface Category {
   blurb: string;
 }
 
-// Order: FDA EUA · Disinfectants · Skin Treatments · Degreasers.
+// Order: FDA EUA · Disinfectants · Treatment Products · Degreasers.
 export const categories: Category[] = [
   {
     key: 'eua',
@@ -346,7 +346,7 @@ export const categories: Category[] = [
   },
   {
     key: 'treatment',
-    label: 'Skin Treatments',
+    label: 'Treatment Products',
     slug: 'treatment',
     href: '/products/treatment',
     image: '/products/cat-treatment.webp',

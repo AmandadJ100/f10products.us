@@ -29,7 +29,7 @@ const jsonLd = [
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
       { '@type': 'ListItem', position: 2, name: 'Products', item: SITE.url + '/products' },
-      { '@type': 'ListItem', position: 3, name: 'Skin Treatments', item: SITE.url + '/products/treatment' },
+      { '@type': 'ListItem', position: 3, name: 'Treatment Products', item: SITE.url + '/products/treatment' },
     ],
   },
   ...items.map((p) => ({
@@ -44,7 +44,7 @@ const jsonLd = [
 ];
 ---
 <BaseLayout
-  title="Skin Treatments"
+  title="Treatment Products"
   description="The F10® topical antiseptic skin treatment range for the US market, including FDA Index (Minor Species) listed products — FOI Summaries and Safety Data Sheets published in full."
 >
   <Fragment slot="head">
@@ -56,7 +56,7 @@ const jsonLd = [
     <div class="section-inner py-16">
       <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
         <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span>
-        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> Skin Treatments
+        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> Treatment Products
       </nav>
       <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
         F10® antiseptic skin treatments
