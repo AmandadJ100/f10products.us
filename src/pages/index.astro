@@ -45,7 +45,7 @@ const productCategories = categories.map((c) => ({
   href: c.href,
   image: c.image,
   imageAlt: c.imageAlt,
-  description: `${c.blurb} (${productsInCategory(c.key).length} products)`,
+  description: `${c.blurb} (${productsInCategory(c.key).length} product${productsInCategory(c.key).length === 1 ? '' : 's'})`,
 }));
 
 // Information only — no links (Amanda 2026-09-04). Card renders as a plain

@@ -85,7 +85,7 @@ const jsonLd = {
           {categories.map((c) => (
             <li class="flex items-center justify-between gap-3 border-b border-border-grey pb-2 last:border-0 last:pb-0">
               <a href={c.href} class="font-semibold text-charcoal hover:text-f10-blue">{c.label}</a>
-              <span class="text-sm text-medium-grey">{productsInCategory(c.key).length} products</span>
+              <span class="text-sm text-medium-grey">{productsInCategory(c.key).length} product{productsInCategory(c.key).length === 1 ? '' : 's'}</span>
             </li>
           ))}
         </ul>
