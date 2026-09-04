@@ -15,7 +15,7 @@ const cards = categories.map((c) => ({
   href: c.href,
   image: c.image,
   imageAlt: c.imageAlt,
-  description: `${c.blurb} (${productsInCategory(c.key).length} products)`,
+  description: c.blurb,
 }));
 
 const jsonLd = {
@@ -45,7 +45,7 @@ const jsonLd = {
         The F10® product range
       </h1>
       <p class="mt-4 max-w-2xl text-lg text-white/90">
-        F10® products presented for the US market, organised into three groups. Each product links its
+        F10® products presented for the US market, organised into four groups. Each product links its
         published documents — FDA Fact Sheets, FOI Summaries, and Safety Data Sheets — so professional
         buyers can verify for themselves.
       </p>

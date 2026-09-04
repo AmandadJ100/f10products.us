@@ -333,7 +333,7 @@ export const categories: Category[] = [
     href: '/products/eua',
     image: '/products/eua-wound-spray.webp',
     imageAlt: 'F10® FDA Emergency Use Authorized products',
-    blurb: 'US Emergency Use Authorized for New World screwworm. FDA documents published in full.',
+    blurb: 'US Emergency Use Authorized for New World Screwworm. FDA documents published in full.',
   },
   {
     key: 'disinfectants',

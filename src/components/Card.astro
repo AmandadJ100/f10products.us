@@ -2,9 +2,11 @@
 // Signature horizontal image-card (DESIGN.md). The image is forced to
 // width:100% + fixed height + object-cover, baked in so the SA "tiny cards"
 // bug cannot recur. Hover = blue border + slight lift + soft shadow.
+// When no `href` is given the card renders as a plain <div> (information only,
+// no link, no hover-interaction) — used for the Home "Who we serve" cards.
 interface Props {
   title: string;
-  href: string;
+  href?: string;
   image?: string;
   imageAlt?: string;
   description?: string;
@@ -15,15 +17,19 @@ interface Props {
 }
 const { title, href, image, imageAlt = '', description, fit = 'cover', eager = false } = Astro.props;
 const contain = fit === 'contain';
+const Tag = href ? 'a' : 'div';
+const interactive = href
+  ? 'transition-all duration-200 hover:-translate-y-0.5 hover:border-f10-blue hover:shadow-[0_6px_14px_rgba(14,119,188,0.14)]'
+  : '';
 ---
-<a
+<Tag
   href={href}
-  class="group flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-border-grey bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-f10-blue hover:shadow-[0_6px_14px_rgba(14,119,188,0.14)]"
+  class:list={["group flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-border-grey bg-white", interactive]}
 >
   <div class:list={["w-full overflow-hidden", contain ? "h-56 bg-soft-grey p-4" : "h-44 bg-light-blue"]}>
     {image ? (
       <img src={image} alt={imageAlt} loading={eager ? "eager" : "lazy"} decoding="async"
-           class:list={["h-full w-full transition-transform duration-300 group-hover:scale-[1.03]", contain ? "object-contain" : "object-cover"]} />
+           class:list={["h-full w-full", href ? "transition-transform duration-300 group-hover:scale-[1.03]" : "", contain ? "object-contain" : "object-cover"]} />
     ) : (
       <div class="dots-light flex h-full w-full items-center justify-center text-sm font-semibold text-medium-grey">
         [IMAGE: {title}]
@@ -31,7 +37,7 @@ const contain = fit === 'contain';
     )}
   </div>
   <div class="flex flex-1 flex-col gap-1 p-5">
-    <h3 class="text-lg font-extrabold text-charcoal group-hover:text-f10-blue">{title}</h3>
+    <h3 class:list={["text-lg font-extrabold text-charcoal", href ? "group-hover:text-f10-blue" : ""]}>{title}</h3>
     {description && <p class="text-sm leading-relaxed text-medium-grey">{description}</p>}
   </div>
-</a>
+</Tag>

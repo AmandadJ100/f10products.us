@@ -6,7 +6,7 @@ export const SITE = {
   domain: 'f10products.com',
   url: 'https://f10products.com',
   // Voice words (DESIGN.md): clinical, assured, international.
-  tagline: 'Veterinary & biosecurity disinfectants — trusted by professionals worldwide.',
+  tagline: 'Veterinary disinfectant, biosecurity and treatment products',
   company: 'Health and Hygiene (Pty) Ltd',
   brand: 'F10®', // registered trademark — always F10® in display copy (never the email/domain)
   phone: '1-800-517-4705',

@@ -48,12 +48,14 @@ const productCategories = categories.map((c) => ({
   description: `${c.blurb} (${productsInCategory(c.key).length} products)`,
 }));
 
+// Information only — no links (Amanda 2026-09-04). Card renders as a plain
+// <div> when no href is given.
 const audiences = [
-  { title: 'Veterinary', href: '/who-we-serve/veterinary',
+  { title: 'Veterinary',
     image: '/audiences/veterinary.webp', imageAlt: 'Veterinary surgical team operating in a clinical theatre' },
-  { title: 'Livestock & Farming', href: '/who-we-serve/livestock-farming',
+  { title: 'Livestock & Farming',
     image: '/audiences/livestock-farming.webp', imageAlt: 'Rancher with a horse and cattle on a US livestock farm' },
-  { title: 'Pet, Avian & Exotic Owners', href: '/who-we-serve/companion-animals',
+  { title: 'Pet, Avian & Exotic Owners',
     image: '/audiences/pet-avian-exotic-owners.webp', imageAlt: 'Pet owner at home with a dog, cat and pet bird' },
 ];
 ---
@@ -72,8 +74,8 @@ const audiences = [
           Scientifically proven infection control for animal health and biosecurity
         </h1>
         <p class="mt-4 max-w-xl text-lg text-white/90">
-          F10® veterinary and biosecurity disinfectants — with the evidence, credentials, and FDA
-          Emergency Use Authorized documentation professionals verify before they buy.
+          F10® veterinary disinfectants, biosecurity and treatment products — with the evidence,
+          credentials, and FDA Emergency Use Authorized documentation professionals verify before they buy.
         </p>
         <div class="mt-7 flex flex-wrap gap-3">
           <a href="/products" class="rounded-lg bg-f10-red px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:brightness-110">
@@ -111,10 +113,10 @@ const audiences = [
         <span class="inline-block rounded-full bg-f10-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-f10-blue">
           FDA Emergency Use Authorization
         </span>
-        <h2 class="mt-3 text-3xl font-extrabold">Authorized for use against New World screwworm</h2>
+        <h2 class="mt-3 text-3xl font-extrabold">Authorized for use against New World Screwworm</h2>
         <p class="mt-3 text-charcoal">
           Two F10® products are authorized by the U.S. FDA under Emergency Use Authorization for the
-          prevention and treatment of infestations caused by New World screwworm
+          prevention and treatment of infestations caused by New World Screwworm
           (<em>Cochliomyia hominivorax</em>) larvae — myiasis — in the following animals:
         </p>
       </div>
@@ -191,7 +193,7 @@ const audiences = [
         <h2 class="text-3xl font-extrabold">Evidence you can verify</h2>
         <p class="mt-3 text-medium-grey">
           Trust is the point. Credentials, evidence, and the FDA Emergency Use Authorized documents are
-          published in full and unaltered — so professional buyers can confirm F10® for themselves.
+          published in full and unaltered — so professional buyers can confirm F10® authenticity.
         </p>
         <a href="/credentials" class="mt-5 inline-block rounded-lg bg-f10-blue px-6 py-3 text-sm font-bold text-white transition hover:bg-f10-blue-deep">
           See credentials & documents
