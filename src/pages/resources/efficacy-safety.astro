@@ -33,31 +33,37 @@ const reports = [
     tag: 'Biological efficacy',
     title: 'Determination of the biological efficacy of F10® Wound Spray with Insecticide and F10® Antiseptic Barrier Ointment with Insecticide against Lucilia species (blowfly)',
     href: `${DOC}/biological-efficacy-wi-products-vs-lucilia-blowfly.pdf`,
+    author: 'SABS',
   },
   {
     tag: 'In vitro',
     title: 'In vitro study to determine the efficacy of F10® Wound Spray with Insecticide and F10® Antiseptic Barrier Ointment with Insecticide to control Lucilia cuprina larvae',
     href: `${DOC}/in-vitro-efficacy-wi-products-lucilia-cuprina-larvae.pdf`,
+    author: 'Prof. TC van der Linde',
   },
   {
     tag: 'Species range',
     title: 'Effectiveness of F10® Wound Spray with Insecticide to control species of blow fly other than L. cuprina',
     href: `${DOC}/wound-spray-wi-blowfly-other-than-l-cuprina.pdf`,
+    author: 'Dr JA Kelly',
   },
   {
     tag: 'Stability · in vitro',
     title: 'In vitro study to test for possible deterioration of the effectiveness of F10® Germicidal Wound Spray to control Lucilia cuprina larvae',
     href: `${DOC}/deterioration-test-wound-spray-lucilia-cuprina-larvae.pdf`,
+    author: 'Dr JA Kelly',
   },
   {
     tag: 'Stability · in vitro',
     title: 'An in vitro study to test for possible deterioration of the effectiveness of F10® Germicidal Wound Spray to control Lucilia cuprina eggs',
     href: `${DOC}/deterioration-test-wound-spray-lucilia-cuprina-eggs.pdf`,
+    author: 'Dr JA Kelly',
   },
   {
     tag: 'Residue · MRL',
     title: 'F10® Antiseptic Wound Spray with Insecticide — residue (MRL) compliance for beef and milk on open wounds',
     href: `${DOC}/wound-spray-wi-mrl-residue-beef-milk.pdf`,
+    author: 'F10 Products',
   },
 ];
 
@@ -119,6 +125,7 @@ const jsonLd = {
           <div class="flex flex-col rounded-[var(--radius-card)] border border-border-grey bg-white p-6 transition hover:-translate-y-0.5 hover:border-f10-blue hover:shadow-md">
             <span class="inline-block w-fit rounded-full bg-soft-grey px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-medium-grey">{r.tag}</span>
             <h3 class="mt-3 text-base font-extrabold leading-snug text-charcoal">{r.title}</h3>
+            {r.author && <p class="mt-2 text-sm text-medium-grey"><span class="font-semibold text-charcoal">Author:</span> {r.author}</p>}
             <a href={r.href} target="_blank" rel="noopener" class="mt-auto pt-4 text-sm font-semibold text-f10-red hover:underline">
               View report (PDF) →
             </a>
