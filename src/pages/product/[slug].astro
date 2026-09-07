@@ -24,10 +24,6 @@ const related = relatedProducts(product);
 // EUA-primary products have a single EUA-labelled pack shot (no per-size range).
 // Use it for the gallery so the page never shows the FDA-Index (MUMS) packs.
 const isEuaPrimary = cat.key === 'eua';
-// EUA product pages carry the "NWS" (New World Screwworm) qualifier in the
-// category label (Amanda 2026-09-07) — scoped to these product pages; the
-// category/hub pages keep "FDA EUA Products".
-const catLabel = isEuaPrimary ? 'FDA NWS EUA Products' : cat.label;
 const galleryImage = isEuaPrimary && product.imageEua ? product.imageEua : product.image;
 const galleryAlt = isEuaPrimary && product.imageEuaAlt ? product.imageEuaAlt : product.imageAlt;
 const galleryPacks = isEuaPrimary ? undefined : product.packs;
@@ -41,7 +37,7 @@ const jsonLd = [
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
       { '@type': 'ListItem', position: 2, name: 'Products', item: SITE.url + '/products' },
-      { '@type': 'ListItem', position: 3, name: catLabel, item: SITE.url + cat.href },
+      { '@type': 'ListItem', position: 3, name: cat.label, item: SITE.url + cat.href },
       { '@type': 'ListItem', position: 4, name: product.name, item: SITE.url + '/product/' + product.slug },
     ],
   },
@@ -71,10 +67,10 @@ const jsonLd = [
       <nav aria-label="Breadcrumb" class="mb-4 text-sm text-medium-grey">
         <a href="/" class="hover:text-f10-blue">Home</a> <span aria-hidden="true">/</span>
         <a href="/products" class="hover:text-f10-blue">Products</a> <span aria-hidden="true">/</span>
-        <a href={cat.href} class="hover:text-f10-blue">{catLabel}</a> <span aria-hidden="true">/</span>
+        <a href={cat.href} class="hover:text-f10-blue">{cat.label}</a> <span aria-hidden="true">/</span>
         <span class="text-charcoal">{product.name}</span>
       </nav>
-      <p class="text-xs font-bold uppercase tracking-wider text-f10-blue">{catLabel}</p>
+      <p class="text-xs font-bold uppercase tracking-wider text-f10-blue">{cat.label}</p>
       <h1 class="mt-2 max-w-3xl text-3xl font-black leading-tight text-charcoal sm:text-4xl">{product.name}</h1>
     </div>
   </section>

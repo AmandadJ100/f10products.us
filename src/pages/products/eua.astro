@@ -30,7 +30,7 @@ const jsonLd = [
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
       { '@type': 'ListItem', position: 2, name: 'Products', item: SITE.url + '/products' },
-      { '@type': 'ListItem', position: 3, name: 'FDA EUA Products', item: SITE.url + '/products/eua' },
+      { '@type': 'ListItem', position: 3, name: 'FDA NWS EUA Products', item: SITE.url + '/products/eua' },
     ],
   },
   ...items.map((p) => ({
@@ -45,7 +45,7 @@ const jsonLd = [
 ];
 ---
 <BaseLayout
-  title="FDA EUA Products"
+  title="FDA NWS EUA Products"
   description="F10® products authorized under FDA Emergency Use Authorization for New World Screwworm — Fact Sheets and FOI Summaries published in full and unaltered."
 >
   <Fragment slot="head">
@@ -57,7 +57,7 @@ const jsonLd = [
     <div class="section-inner py-16">
       <nav aria-label="Breadcrumb" class="mb-4 text-sm text-white/80">
         <a href="/" class="hover:underline">Home</a> <span aria-hidden="true">/</span>
-        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> FDA EUA Products
+        <a href="/products" class="hover:underline">Products</a> <span aria-hidden="true">/</span> FDA NWS EUA Products
       </nav>
       <h1 class="max-w-3xl text-white text-4xl font-black leading-[1.05] sm:text-5xl">
         FDA Emergency Use Authorized products
@@ -116,7 +116,7 @@ const jsonLd = [
   <!-- Distributor CTA -->
   <section class="dots-blue text-white">
     <div class="section-inner flex flex-col items-center gap-4 py-14 text-center">
-      <h2 class="text-3xl font-extrabold text-white">Source the FDA EUA products</h2>
+      <h2 class="text-3xl font-extrabold text-white">Source the FDA NWS EUA products</h2>
       <p class="max-w-xl text-white/90">The FDA Emergency Use Authorized products are supplied through an authorized US distributor.</p>
       <a href="/distributors" class="rounded-lg bg-white px-6 py-3 text-sm font-bold text-f10-blue transition hover:bg-light-blue">
         Find a distributor

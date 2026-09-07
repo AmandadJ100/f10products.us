@@ -332,7 +332,7 @@ export interface Category {
 export const categories: Category[] = [
   {
     key: 'eua',
-    label: 'FDA EUA Products',
+    label: 'FDA NWS EUA Products',
     slug: 'eua',
     href: '/products/eua',
     image: '/products/eua-wound-spray.webp',
