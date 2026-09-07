@@ -328,7 +328,7 @@ export interface Category {
   blurb: string;
 }
 
-// Order: FDA EUA · Disinfectants · Treatment Products · Degreasers.
+// Order: FDA EUA · Disinfectants · Treatment Products · Biofilm Removers.
 export const categories: Category[] = [
   {
     key: 'eua',
@@ -358,10 +358,10 @@ export const categories: Category[] = [
     blurb: 'Topical antiseptic range, including FDA Index (Minor Species) listed products.',
   },
   {
-    key: 'degreasers',
-    label: 'Degreasers',
-    slug: 'degreasers',
-    href: '/products/degreasers',
+    key: 'degreasers', // internal key kept stable; displayed as "Biofilm Removers"
+    label: 'Biofilm Removers',
+    slug: 'biofilm-removers',
+    href: '/products/biofilm-removers',
     image: '/products/disinfectants/f919sc-biofilm-remover.webp',
     imageAlt: 'F919SC Biofilm Remover range',
     blurb: 'Biofilm removal products for professional cleaning routines.',
