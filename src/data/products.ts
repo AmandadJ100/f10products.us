@@ -42,6 +42,9 @@ export interface Product {
   regNotRequired?: boolean;      // e.g. F919SC — not required to be registered
   directions?: string;           // US-label dilution / use directions, verbatim
   whereToUse?: string;           // "Where to use" (label), verbatim — EPA products + degreaser
+  // Extra internal links shown in the product's Documents block (e.g. to the
+  // Efficacy & Safety toxicity reports). Internal — same tab, not a download.
+  links?: { label: string; href: string }[];
 }
 
 const SDS = '/documents/sds';
@@ -121,6 +124,7 @@ export const products: Product[] = [
     directions: '1:250 (0.5 oz per gallon).',
     whereToUse: 'The product can be used on all surfaces and will not cause fumes, irritation, staining or corrosion. Ideal for over-spraying of work surfaces, examination tables, food & water containers, utensils, equipment, thermometers, litter trays, cages, stables, pens, enclosures, incubators and high touch areas. No rinsing required.',
     docs: [{ type: 'sds', label: 'Safety Data Sheet (SDS)', href: `${SDS}/sds-f10sc-veterinary-disinfectant.pdf` }],
+    links: [{ label: 'Toxicity test reports (F10SC)', href: '/resources/efficacy-safety#toxicity-f10sc' }],
     overview: null,
   },
   {
