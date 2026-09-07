@@ -335,8 +335,8 @@ export const categories: Category[] = [
     label: 'FDA NWS EUA Products',
     slug: 'eua',
     href: '/products/eua',
-    image: '/products/eua-wound-spray.webp',
-    imageAlt: 'F10® FDA Emergency Use Authorized products',
+    image: '/products/cat-eua.webp',
+    imageAlt: 'F10® FDA NWS EUA product group — Wound Spray and Barrier Ointment with Insecticide',
     blurb: 'US Emergency Use Authorized for New World Screwworm. FDA documents published in full.',
   },
   {
