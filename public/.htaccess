@@ -11,3 +11,11 @@ RewriteEngine On
 # QSD drops the legacy ?tmstv= cache-buster the printed QR appends.
 RewriteRule ^download/6867/?$ /documents/f10-wound-spray-wi-eua-fact-sheet-foi-combined.pdf [R=301,L,QSD]
 RewriteRule ^download/6870/?$ /documents/f10-barrier-ointment-wi-eua-fact-sheet-foi-combined.pdf [R=301,L,QSD]
+
+# --- Canonical host: force www --------------------------------------------
+# All F10 labels + marketing print www.f10products.com, so www is canonical.
+# The QR /download rules above carry [L] and run first, so a printed
+# (non-www) QR URL resolves straight to its PDF without a www bounce; every
+# other non-www request 301s to the www host.
+RewriteCond %{HTTP_HOST} ^f10products\.com$ [NC]
+RewriteRule ^(.*)$ https://www.f10products.com/$1 [R=301,L]

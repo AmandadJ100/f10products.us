@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // Production URL — used for canonical links + sitemap. Host chosen at deploy step.
 export default defineConfig({
-  site: 'https://f10products.com',
+  site: 'https://www.f10products.com',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

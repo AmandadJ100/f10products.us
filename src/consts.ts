@@ -3,8 +3,8 @@
 
 export const SITE = {
   name: 'F10® Products US',
-  domain: 'f10products.com',
-  url: 'https://f10products.com',
+  domain: 'www.f10products.com',
+  url: 'https://www.f10products.com',
   // Voice words (DESIGN.md): clinical, assured, international.
   tagline: 'Veterinary disinfectant, biosecurity and treatment products',
   company: 'Health and Hygiene (Pty) Ltd',
